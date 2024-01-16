@@ -6,16 +6,19 @@ namespace ReservationApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+		private readonly IReservationService _reservations;
+		private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IReservationService reservations, ILogger<HomeController> logger)
         {
+            _reservations = reservations;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Reservation> reservationsList = _reservations.FindAll();
+            return View(reservationsList);
         }
 
         public IActionResult Privacy()

@@ -27,6 +27,9 @@ namespace ReservationApp.Controllers
 			if(ModelState.IsValid)
 			{
 				var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+
+				user.EmailConfirmed = true;
+
 				var result = await userManager.CreateAsync(user, model.Password);
 
 				if(result.Succeeded)
@@ -39,6 +42,39 @@ namespace ReservationApp.Controllers
 				{
 					ModelState.AddModelError(string.Empty, error.Description);
 				}
+			}
+			return View(model);
+		}
+
+		[HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+			await signInManager.SignOutAsync();
+			return RedirectToAction("index", "home");
+        }
+
+		[HttpGet]
+		public IActionResult Login()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+				if (result.Succeeded)
+				{
+					return RedirectToAction("index", "home");
+				}
+
+				ModelState.AddModelError(string.Empty, "Logowanie nie powiodło się!");
+				
+				
+				
 			}
 			return View(model);
 		}
