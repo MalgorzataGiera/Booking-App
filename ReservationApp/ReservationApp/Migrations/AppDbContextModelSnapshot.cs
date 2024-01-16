@@ -52,14 +52,14 @@ namespace ReservationApp.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "304d1986-a3a4-418c-a2ae-9e64a59a751a",
+                            ConcurrencyStamp = "ff6b62a8-1f05-46db-8915-1dabf586e68a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "eb7bdad0-b821-47ce-bf82-bf3b4909287c",
+                            ConcurrencyStamp = "2b5aef8b-a0a9-4060-9b1a-b1ac4ae30fc3",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -157,35 +157,35 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3a98a2f6-30b0-4002-8487-a69e2386d461",
+                            Id = "cd967b25-3793-47a9-b7a6-c8262ca13c69",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "90283bc1-8789-4ff3-af93-070e7e05e691",
-                            Email = "user@example.com",
+                            ConcurrencyStamp = "4904e4c0-ace4-4187-b46a-48e66390345c",
+                            Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@EXAMPLE.COM",
-                            NormalizedUserName = "USER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBkqV4O/05h+H9z8PJuPpRNGTYQPdIQhhwGytOwB68XI7zLLsvd1uwGPPuOnBY16BA==",
+                            NormalizedUserName = "USER1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMQULgjRfEVTVuQV8gwBl2PO8hal1DZhFzw6nhKnS6ib1lyA1RJL3qhMl4+BVX9aRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c95be62e-e648-449d-a23a-2a4cbb985f2b",
+                            SecurityStamp = "920ecd23-b510-4cc4-9acb-f60ca060475c",
                             TwoFactorEnabled = false,
-                            UserName = "user@example.com"
+                            UserName = "user1@example.com"
                         },
                         new
                         {
-                            Id = "cb8c4260-d060-4218-922e-52f687ff177d",
+                            Id = "083b28d7-c94b-4f6c-8193-8ef4144bb77d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cbf51b45-d7e0-438c-a4ba-4b785abfc225",
-                            Email = "admin",
+                            ConcurrencyStamp = "385bba49-3158-402f-9d7a-1b08a48ab160",
+                            Email = "admin1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMDP+icFoCvYmx4TLizGwV7GNXRyGFQY01wkClczrcbzpS2hDJG6AdtCBVKNbpQ8YQ==",
+                            NormalizedEmail = "ADMIN1@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPYiH9EjhhP3/rzqkY8J+mfIeJigPu2zAolw0ORNrhbSK6C4MnRAUAnJP4sipqJY2g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "76f9cb97-2186-4826-b58b-747e13d87c5d",
+                            SecurityStamp = "bf59c719-ed4a-4249-a7ce-a9c26e808501",
                             TwoFactorEnabled = false,
-                            UserName = "admi"
+                            UserName = "admin1@example.com"
                         });
                 });
 
@@ -217,12 +217,10 @@ namespace ReservationApp.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -255,12 +253,12 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "cb8c4260-d060-4218-922e-52f687ff177d",
+                            UserId = "083b28d7-c94b-4f6c-8193-8ef4144bb77d",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "3a98a2f6-30b0-4002-8487-a69e2386d461",
+                            UserId = "cd967b25-3793-47a9-b7a6-c8262ca13c69",
                             RoleId = "2"
                         });
                 });
@@ -271,12 +269,10 @@ namespace ReservationApp.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -305,6 +301,9 @@ namespace ReservationApp.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NumberOfNights")
+                        .HasColumnType("int");
+
                     b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -312,10 +311,16 @@ namespace ReservationApp.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8, 2)");
 
+                    b.Property<string>("ReceivedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Room")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceivedById");
 
                     b.ToTable("Reservations");
 
@@ -325,9 +330,11 @@ namespace ReservationApp.Migrations
                             Id = 1,
                             Address = "Sample Address",
                             City = "Sample City",
-                            Date = new DateTime(2024, 1, 13, 12, 37, 54, 640, DateTimeKind.Local).AddTicks(8454),
+                            Date = new DateTime(2024, 1, 16, 18, 36, 51, 599, DateTimeKind.Local).AddTicks(887),
+                            NumberOfNights = 3,
                             Owner = "Sample Owner",
                             Price = 100.00m,
+                            ReceivedById = "083b28d7-c94b-4f6c-8193-8ef4144bb77d",
                             Room = 101
                         });
                 });
@@ -381,6 +388,17 @@ namespace ReservationApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ReservationApp.Models.Reservation", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ReceivedBy")
+                        .WithMany()
+                        .HasForeignKey("ReceivedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceivedBy");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ReservationApp.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentity : Migration
+    public partial class Migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,24 +50,6 @@ namespace ReservationApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reservations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Room = table.Column<int>(type: "int", nullable: false),
-                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,8 +98,8 @@ namespace ReservationApp.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -161,8 +143,8 @@ namespace ReservationApp.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -176,13 +158,39 @@ namespace ReservationApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reservations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Room = table.Column<int>(type: "int", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
+                    NumberOfNights = table.Column<int>(type: "int", nullable: false),
+                    ReceivedById = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_ReceivedById",
+                        column: x => x.ReceivedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "304d1986-a3a4-418c-a2ae-9e64a59a751a", "Admin", "ADMIN" },
-                    { "2", "eb7bdad0-b821-47ce-bf82-bf3b4909287c", "User", "USER" }
+                    { "1", "ff6b62a8-1f05-46db-8915-1dabf586e68a", "Admin", "ADMIN" },
+                    { "2", "2b5aef8b-a0a9-4060-9b1a-b1ac4ae30fc3", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -190,23 +198,23 @@ namespace ReservationApp.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3a98a2f6-30b0-4002-8487-a69e2386d461", 0, "90283bc1-8789-4ff3-af93-070e7e05e691", "user@example.com", true, false, null, "USER@EXAMPLE.COM", "USER@EXAMPLE.COM", "AQAAAAEAACcQAAAAEBkqV4O/05h+H9z8PJuPpRNGTYQPdIQhhwGytOwB68XI7zLLsvd1uwGPPuOnBY16BA==", null, false, "c95be62e-e648-449d-a23a-2a4cbb985f2b", false, "user@example.com" },
-                    { "cb8c4260-d060-4218-922e-52f687ff177d", 0, "cbf51b45-d7e0-438c-a4ba-4b785abfc225", "admin", true, false, null, "ADMIN", "ADMIN", "AQAAAAEAACcQAAAAEMDP+icFoCvYmx4TLizGwV7GNXRyGFQY01wkClczrcbzpS2hDJG6AdtCBVKNbpQ8YQ==", null, false, "76f9cb97-2186-4826-b58b-747e13d87c5d", false, "admi" }
+                    { "083b28d7-c94b-4f6c-8193-8ef4144bb77d", 0, "385bba49-3158-402f-9d7a-1b08a48ab160", "admin1@example.com", true, false, null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAEAACcQAAAAEPYiH9EjhhP3/rzqkY8J+mfIeJigPu2zAolw0ORNrhbSK6C4MnRAUAnJP4sipqJY2g==", null, false, "bf59c719-ed4a-4249-a7ce-a9c26e808501", false, "admin1@example.com" },
+                    { "cd967b25-3793-47a9-b7a6-c8262ca13c69", 0, "4904e4c0-ace4-4187-b46a-48e66390345c", "user1@example.com", true, false, null, "USER@EXAMPLE.COM", "USER1@EXAMPLE.COM", "AQAAAAEAACcQAAAAEMQULgjRfEVTVuQV8gwBl2PO8hal1DZhFzw6nhKnS6ib1lyA1RJL3qhMl4+BVX9aRw==", null, false, "920ecd23-b510-4cc4-9acb-f60ca060475c", false, "user1@example.com" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Reservations",
-                columns: new[] { "Id", "Address", "City", "Date", "Owner", "Price", "Room" },
-                values: new object[] { 1, "Sample Address", "Sample City", new DateTime(2024, 1, 13, 12, 37, 54, 640, DateTimeKind.Local).AddTicks(8454), "Sample Owner", 100.00m, 101 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "2", "3a98a2f6-30b0-4002-8487-a69e2386d461" },
-                    { "1", "cb8c4260-d060-4218-922e-52f687ff177d" }
+                    { "1", "083b28d7-c94b-4f6c-8193-8ef4144bb77d" },
+                    { "2", "cd967b25-3793-47a9-b7a6-c8262ca13c69" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Reservations",
+                columns: new[] { "Id", "Address", "City", "Date", "NumberOfNights", "Owner", "Price", "ReceivedById", "Room" },
+                values: new object[] { 1, "Sample Address", "Sample City", new DateTime(2024, 1, 16, 18, 36, 51, 599, DateTimeKind.Local).AddTicks(887), 3, "Sample Owner", 100.00m, "083b28d7-c94b-4f6c-8193-8ef4144bb77d", 101 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -246,6 +254,11 @@ namespace ReservationApp.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_ReceivedById",
+                table: "Reservations",
+                column: "ReceivedById");
         }
 
         /// <inheritdoc />

@@ -1,0 +1,44 @@
+﻿@model Reservation
+@{
+    ViewData["Title"] = "Details of reservation";
+}
+<h1>Details of reservation</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Owner</th>
+                <th>Room</th>
+                <th>Price</th>
+                <th>Number of nights</th>
+                <th>Amount</th>
+                <th>Received by</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Date</td>
+                <td>@Model.City</td>
+                <td>@Model.Address</td>
+                <td>@Model.Owner</td>
+                <td>@Model.Room</td>
+                <td>@Model.Price</td>
+                <td>@Model.NumberOfNights</td>
+                <td>@(Model.Price * Model.NumberOfNights)</td>
+                @*<td>
+                    @if (Model.ReceivedBy != null)
+                    {
+                        <p>Użytkownik: @Model.ReceivedBy.UserName</p>
+                    }
+                    else
+                    {
+                        <p>Brak przypisanego użytkownika</p>
+                    }
+                </td>*@
+            </tr>            
+        </tbody>
+    </table>
+</div>

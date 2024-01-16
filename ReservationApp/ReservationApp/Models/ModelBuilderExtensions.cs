@@ -19,27 +19,27 @@ namespace ReservationApp.Models
                 new IdentityUser
                 {
                     Id = UserId,
-                    UserName = "user@example.com",
-                    NormalizedUserName = "USER@EXAMPLE.COM",
-                    Email = "user@example.com",
+                    UserName = "user1@example.com",
+                    NormalizedUserName = "USER1@EXAMPLE.COM",
+                    Email = "user1@example.com",
                     NormalizedEmail = "USER@EXAMPLE.COM",
                     EmailConfirmed = true,
                     PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "User@123")
                 }
             );
 
-            // Seed a test admin
+            //Seed a test admin
             var adminId = Guid.NewGuid().ToString();
             modelBuilder.Entity<IdentityUser>().HasData(
                 new IdentityUser
                 {
                     Id = adminId,
-                    UserName = "admi",
-                    NormalizedUserName = "ADMIN",
-                    Email = "admin",
-                    NormalizedEmail = "ADMIN",
+                    UserName = "admin1@example.com",
+                    NormalizedUserName = "ADMIN1@EXAMPLE.COM",
+                    Email = "admin1@example.com",
+                    NormalizedEmail = "ADMIN1@EXAMPLE.COM",
                     EmailConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Admin123")
+                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Admin123!")
                 }
             );
 
@@ -59,7 +59,9 @@ namespace ReservationApp.Models
                     Address = "Sample Address",
                     Room = 101,
                     Owner = "Sample Owner",
-                    Price = 100.00m
+                    Price = 100.00m,
+                    NumberOfNights = 3,
+                    ReceivedById = adminId
                 }
             );
         }

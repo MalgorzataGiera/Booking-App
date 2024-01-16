@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace ReservationApp.Models
 {
@@ -35,5 +36,12 @@ namespace ReservationApp.Models
         [Required(ErrorMessage = "Musisz wpisać cenę")]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
+
+        [Display(Name = "NumberOfNights")]
+        [Required(ErrorMessage = "Musisz podać liczbę nocy hotelowych")]
+        public int NumberOfNights { get; set; }
+
+        public IdentityUser ReceivedBy { get; set; }
+        public string ReceivedById { get; set; }
     }
 }

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ReservationApp.Models;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -19,6 +21,12 @@ namespace ReservationApp
                 .AddEntityFrameworkStores<AppDbContext>();
 
             builder.Services.AddMvc().AddXmlSerializerFormatters();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Home/AccessDenied";
+            });
+
             builder.Services.AddScoped<IReservationService, MemoryReservationService>();
 
             // Add services to the container.
@@ -40,8 +48,8 @@ namespace ReservationApp
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",

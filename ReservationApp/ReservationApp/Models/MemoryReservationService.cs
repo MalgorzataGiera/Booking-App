@@ -1,4 +1,6 @@
-﻿namespace ReservationApp.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ReservationApp.Models
 {
     public class MemoryReservationService : IReservationService
     {
@@ -39,18 +41,13 @@
 
         public Reservation? FindById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Reservations.Find(id);
         }
 
         public void Update(Reservation reservation)
         {
             throw new NotImplementedException();
         }
-
-        //public Reservation? FindById(int id)
-        //{
-        //    return _reservations[id];
-        //}
 
         //public void Update(Reservation reservation)
         //{
