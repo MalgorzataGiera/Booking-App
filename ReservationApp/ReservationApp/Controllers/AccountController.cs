@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReservationApp.Models;
+using System.Security.Claims;
 
 namespace ReservationApp.Controllers
 {
@@ -68,7 +69,11 @@ namespace ReservationApp.Controllers
 
 				if (result.Succeeded)
 				{
-					return RedirectToAction("index", "home");
+					// dodaja claim
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    var claims = await userManager.GetClaimsAsync(user);
+
+                    return RedirectToAction("index", "home");
 				}
 
 				ModelState.AddModelError(string.Empty, "Logowanie nie powiodło się!");

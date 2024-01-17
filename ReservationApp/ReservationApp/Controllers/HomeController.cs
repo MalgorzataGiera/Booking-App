@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ReservationApp.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace ReservationApp.Controllers
 {
@@ -11,6 +14,7 @@ namespace ReservationApp.Controllers
 		private readonly IReservationService _reservations;
 		private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
+
 
         public HomeController(IReservationService reservations, ILogger<HomeController> logger, AppDbContext context)
         {
@@ -36,6 +40,36 @@ namespace ReservationApp.Controllers
             return View(_reservations.FindById(id));
         }
 
+        [HttpGet]
+
+        [Authorize]
+        public IActionResult Create()
+        {
+            ViewBag.AllUsers = new SelectList(_context.Users, "Id", "UserName");
+            return View();
+        }
+                
+        [HttpPost]
+
+        [Authorize]
+        public async Task<IActionResult> Create(Reservation model)
+        {
+
+            //Set the current user as the ReceivedBy for the reservation
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+            model.ReceivedById = userIdClaim.Value;
+
+            if (ModelState.IsValid)
+            {
+                _context.Reservations.Add(model);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");               
+            }
+            
+            return View(model);
+        }
 
         [Authorize(Roles = "Admin")]
         public IActionResult Statistics()

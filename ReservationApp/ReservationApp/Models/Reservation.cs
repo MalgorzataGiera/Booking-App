@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ReservationApp.Models
 {
@@ -41,7 +42,9 @@ namespace ReservationApp.Models
         [Required(ErrorMessage = "Musisz podać liczbę nocy hotelowych")]
         public int NumberOfNights { get; set; }
 
+        [ValidateNever]
         public IdentityUser ReceivedBy { get; set; }
+        [ValidateNever]
         public string ReceivedById { get; set; }
     }
 }
