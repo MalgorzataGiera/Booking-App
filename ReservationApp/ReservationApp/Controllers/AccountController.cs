@@ -61,6 +61,7 @@ namespace ReservationApp.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -69,8 +70,8 @@ namespace ReservationApp.Controllers
 
 				if (result.Succeeded)
 				{
-					// dodaja claim
-                    var user = await userManager.FindByEmailAsync(model.Email);
+					// dodaje claim
+                    IdentityUser user = await userManager.FindByNameAsync(model.Email);
                     var claims = await userManager.GetClaimsAsync(user);
 
                     return RedirectToAction("index", "home");

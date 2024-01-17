@@ -37,15 +37,16 @@ namespace ReservationApp.Controllers
 
         public IActionResult Details(int id)
         {
-            return View(_reservations.FindById(id));
+            CompositeModel compositeModel= new CompositeModel();
+            compositeModel.reservation = _reservations.FindById(id);
+            compositeModel.userName = User.Identity.Name;
+            return View(compositeModel);
         }
 
         [HttpGet]
-
         [Authorize]
         public IActionResult Create()
         {
-            ViewBag.AllUsers = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
                 
@@ -54,14 +55,13 @@ namespace ReservationApp.Controllers
         [Authorize]
         public async Task<IActionResult> Create(Reservation model)
         {
-
-            //Set the current user as the ReceivedBy for the reservation
-            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-
-            model.ReceivedById = userIdClaim.Value;
-
             if (ModelState.IsValid)
             {
+                //Set the current user as the ReceivedBy for the reservation
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+                model.ReceivedById = userIdClaim.Value;
+
                 _context.Reservations.Add(model);
                 await _context.SaveChangesAsync();
 

@@ -1,4 +1,4 @@
-﻿@model Reservation
+﻿@model CompositeModel
 @{
     ViewData["Title"] = "Details of reservation";
 }
@@ -20,24 +20,15 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.Date</td>
-                <td>@Model.City</td>
-                <td>@Model.Address</td>
-                <td>@Model.Owner</td>
-                <td>@Model.Room</td>
-                <td>@Model.Price</td>
-                <td>@Model.NumberOfNights</td>
-                <td>@(Model.Price * Model.NumberOfNights)</td>
-                @*<td>
-                    @if (Model.ReceivedBy != null)
-                    {
-                        <p>Użytkownik: @Model.ReceivedBy.UserName</p>
-                    }
-                    else
-                    {
-                        <p>Brak przypisanego użytkownika</p>
-                    }
-                </td>*@
+                <td>@Model.reservation.Date</td>
+                <td>@Model.reservation.City</td>
+                <td>@Model.reservation.Address</td>
+                <td>@Model.reservation.Owner</td>
+                <td>@Model.reservation.Room</td>
+                <td>@Model.reservation.Price</td>
+                <td>@Model.reservation.NumberOfNights</td>
+                <td>@(Model.reservation.Price * Model.reservation.NumberOfNights)</td>
+                <td>@Model.userName</td>
             </tr>            
         </tbody>
     </table>
