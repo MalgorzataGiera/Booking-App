@@ -35,11 +35,18 @@ namespace ReservationApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Details(int id)
         {
-            CompositeModel compositeModel= new CompositeModel();
+            var reservation = _context.Reservations
+        .Include(r => r.ReceivedBy)
+        .FirstOrDefault(r => r.Id == id);
+
+            CompositeModel compositeModel = new CompositeModel
+            ();
             compositeModel.reservation = _reservations.FindById(id);
-            compositeModel.userName = User.Identity.Name;
+            compositeModel.userName = reservation.ReceivedBy.UserName;
             return View(compositeModel);
         }
 
