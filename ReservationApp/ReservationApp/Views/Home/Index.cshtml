@@ -22,7 +22,9 @@
                     <td>@reservation.City</td>
                     <td>@reservation.Owner</td>
                     <td>@reservation.Room</td>
-                    <td><a class="btn btn-outline-info" asp-controller="Home" asp-action="Details" asp-route-id=@reservation.Id>Details</a></td>
+                    <td><a class="btn btn-outline-info" asp-controller="Home" asp-action="Details" asp-route-id=@reservation.Id>Details</a>
+                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edycja</a>
+                    </td>
                 </tr>
             }
         </tbody>

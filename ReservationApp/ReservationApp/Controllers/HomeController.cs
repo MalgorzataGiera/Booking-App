@@ -52,6 +52,32 @@ namespace ReservationApp.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult Update(int id)
+        {
+            return View(_reservations.FindById(id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Update(Reservation model)
+        {
+            if(ModelState.IsValid)
+            {
+                //Set the current user as the ReceivedBy for the reservation
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                model.ReceivedById = userIdClaim.Value;
+
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            return View(_reservations.FindById(model.Id));
+        }
+
+
+        [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
