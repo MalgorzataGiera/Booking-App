@@ -5,24 +5,41 @@ using System.Security.Claims;
 
 namespace ReservationApp.Controllers
 {
+    /// <summary>
+    /// Controller for handling user accounts, including registration, login, and logout.
+    /// </summary>
     public class AccountController : Controller
     {
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly SignInManager<IdentityUser> signInManager;
 
-		public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
+        /// <param name="userManager">The user manager.</param>
+        /// <param name="signInManager">The sign-in manager.</param>
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// GET action for user registration.
+        /// </summary>
+        /// <returns>The registration view.</returns>
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-		[HttpPost]
+        /// <summary>
+        /// POST action for user registration.
+        /// </summary>
+        /// <param name="model">The registration view model.</param>
+        /// <returns>If successful, redirects to the home page; otherwise, returns the registration view with errors.</returns>
+        [HttpPost]
 		public async Task<IActionResult> Register(RegisterViewModel model)
 		{
 			if(ModelState.IsValid)
@@ -47,20 +64,33 @@ namespace ReservationApp.Controllers
 			return View(model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// POST action for user logout.
+        /// </summary>
+        /// <returns>Redirects to the home page after logging out.</returns>
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
 			await signInManager.SignOutAsync();
 			return RedirectToAction("index", "home");
         }
 
-		[HttpGet]
+        /// <summary>
+        /// GET action for user login.
+        /// </summary>
+        /// <returns>The login view.</returns>
+        [HttpGet]
 		public IActionResult Login()
 		{
 			return View();
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// POST action for user login.
+        /// </summary>
+        /// <param name="model">The login view model.</param>
+        /// <returns>If successful, redirects to the home page; otherwise, returns the login view with errors.</returns>
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginViewModel model)
 		{

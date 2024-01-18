@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ReservationApp.Models
 {
+    /// <summary>
+    /// Provides extension methods for seeding data into the database using Entity Framework Core's ModelBuilder.
+    /// </summary>
     public static class ModelBuilderExtensions
     {
+        /// <summary>
+        /// Seeds initial data into the database using Entity Framework Core's ModelBuilder.
+        /// </summary>
+        /// <param name="modelBuilder">The ModelBuilder instance.</param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
             // Seed roles
