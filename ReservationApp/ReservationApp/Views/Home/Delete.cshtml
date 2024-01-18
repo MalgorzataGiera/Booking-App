@@ -1,0 +1,9 @@
+﻿@model Reservation
+@{
+}
+<form asp-action="DeleteConfirmed" method="post">
+    <input asp-for="Id" />
+    <p>czy na pewno usunąć?</p>
+    <button type="submit">tak</button>
+    <a asp-controller="Home" asp-action="index">nie</a>
+</form>

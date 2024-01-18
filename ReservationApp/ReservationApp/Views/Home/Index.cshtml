@@ -12,6 +12,7 @@
                 <th>City</th>
                 <th>Owner</th>
                 <th>Room</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +24,8 @@
                     <td>@reservation.Owner</td>
                     <td>@reservation.Room</td>
                     <td><a class="btn btn-outline-info" asp-controller="Home" asp-action="Details" asp-route-id=@reservation.Id>Details</a>
-                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edycja</a>
+                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edit</a>
+                        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Delete" asp-route-id=@reservation.Id>Delete</a>
                     </td>
                 </tr>
             }

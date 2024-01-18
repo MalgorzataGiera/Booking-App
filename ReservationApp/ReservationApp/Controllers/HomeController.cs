@@ -75,6 +75,25 @@ namespace ReservationApp.Controllers
             return View(_reservations.FindById(model.Id));
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            return View(_reservations.FindById(id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
 
         [HttpGet]
         [Authorize]
