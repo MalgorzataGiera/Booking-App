@@ -1,11 +1,11 @@
 ﻿@model Reservation
 @{
 }
-<h1>dodawanie rezerwacji</h1>
-<form asp-controller="Home" asp-action="Create" method="post">
+<h1>Add new reservation</h1>
+<form asp-controller="Home" asp-action="Create" method="post" class="custom-form">
     <div class="mb-3">
         <label asp-for="Date"></label>
-        <input class="form-control" asp-for="Date" />
+        <input class="form-control" asp-for="Date"/>
         <span class="text-danger" asp-validation-for="Date"></span>
     </div>
 
@@ -32,7 +32,7 @@
         <input class="form-control" asp-for="Room" />
         <span class="text-danger" asp-validation-for="Room"></span>
     </div>
-    
+
     <div class="mb-3">
         <label asp-for="Price"></label>
         <input class="form-control" asp-for="Price" />
@@ -45,7 +45,7 @@
         <span class="text-danger" asp-validation-for="NumberOfNights"></span>
     </div>
 
-    <div class="mb-3">
-        <button class="btn btn-primary" type="submit">Create</button>
+    <div class="my-btn">
+        <button class="btn btn-secondary" type="submit">Create</button>
     </div>
 </form>

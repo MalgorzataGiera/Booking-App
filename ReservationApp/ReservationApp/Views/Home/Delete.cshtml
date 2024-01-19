@@ -1,9 +1,39 @@
 ﻿@model Reservation
 @{
+    ViewData["Title"] = "Delete reservation";
 }
-<form asp-action="DeleteConfirmed" method="post">
-    <input asp-for="Id" />
-    <p>czy na pewno usunąć?</p>
-    <button type="submit">tak</button>
-    <a asp-controller="Home" asp-action="index">nie</a>
-</form>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>City</th>
+                <th>Owner</th>
+                <th>Room</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Date</td>
+                <td>@Model.City</td>
+                <td>@Model.Owner</td>
+                <td>@Model.Room</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="col-md-4 offset-md-4 mt-5">
+    <div class="card" style="border-color: red">
+        <div class="card-body">
+            <form asp-action="DeleteConfirmed" method="post" class="delete-form">
+                <input asp-for="Id" />
+                <p>Are you sure you want to delete?</p>
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <a asp-controller="Home" asp-action="index" class="btn btn-secondary">No</a>
+            </form>
+        </div>
+    </div>
+</div>
+

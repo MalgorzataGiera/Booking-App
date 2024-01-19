@@ -1,0 +1,108 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    background-color: #fff;
+    font-family: "Roboto", sans-serif;    
+}
+
+    .custom-form {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .delete-form {
+        padding-left: 40px;
+        padding-right: 40px;
+        text-align: center
+    }
+
+.form-group {
+    padding: 10px;
+}
+
+    .my-btn{
+        text-align: right;
+        margin: 10px;
+    }
+
+    #toggleModeBtn {
+        position: fixed;
+        bottom: 70px;
+        right: 20px; 
+    }
+
+    .form-control:focus {
+        border-color: #bbbfc7;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.custom-form textarea:-webkit-autofill,
+.custom-form textarea:-webkit-autofill:hover,
+.custom-form textarea:-webkit-autofill:focus,
+.custom-form select:-webkit-autofill,
+.custom-form select:-webkit-autofill:hover,
+.custom-form select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+body.night-mode {
+    background-color: #333;
+    font-family: "Roboto", sans-serif;
+    color: #fff;
+}
+    body.night-mode table {
+        color: #fff; 
+    }
+
+    body.night-mode table thead tr th,
+    body.night-mode table tbody tr td,
+    body.night-mode header .navbar-nav,
+    body.night-mode header .container-fluid,
+    body.night-mode header .navbar-collapse,
+    body.night-mode .form-control {
+        background-color: #333;
+        color: #fff;
+    }
+         
+
+    body.night-mode .card-body {
+        background-color: #333;
+    }
+
+    body.night-mode .card {
+        border-color: #666;
+    }
+
+    body.night-mode .navbar-light.border-bottom {
+        border-color: #66686e !important;
+    }
+
+    body.night-mode .navbar-light.box-shadow {
+        box-shadow: 0 4px 2px -2px #4f5157 !important;
+    }
+
+    body.night-mode .nav-link,
+    body.night-mode .navbar-brand {
+        color: #fff !important;
+    }
+
+    body.night-mode .form-control:-webkit-autofill,
+    body.night-mode .form-control:-webkit-autofill:hover,
+    body.night-mode .form-control:-webkit-autofill:focus,
+    body.night-mode .custom-form textarea:-webkit-autofill,
+    body.night-mode .custom-form textarea:-webkit-autofill:hover,
+    body.night-mode .custom-form textarea:-webkit-autofill:focus,
+    body.night-mode .custom-form select:-webkit-autofill,
+    body.night-mode .custom-form select:-webkit-autofill:hover,
+    body.night-mode .custom-form select:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #333 inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: #fff;
+    }
+
+

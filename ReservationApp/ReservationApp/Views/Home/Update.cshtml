@@ -4,7 +4,7 @@
 *@
 @{
 }
-<h1>Edycja kontaktu</h1>
+<h1>Update a reservation</h1>
 <form asp-controller="Home" asp-action="Update" method="post">
     <div class="mb-3">
         <label asp-for="Date">Date</label>
@@ -48,8 +48,8 @@
         <span class="text-danger" asp-validation-for="NumberOfNights"></span>
     </div>
 
-    <div class="mb-3">
-        <button class="btn btn-primary" type="submit">Zapisz</button>
+    <div class="my-btn">
+        <button class="btn btn-secondary" type="submit">Save</button>
     </div>
 
 </form>
