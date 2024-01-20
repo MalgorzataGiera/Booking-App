@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationApp.Models
 {
@@ -22,50 +22,50 @@ namespace ReservationApp.Models
         /// Gets or sets the date of the reservation.
         /// </summary>
         [Display(Name = "Date")]
-        [Required(ErrorMessage = "Musisz wspiać datę")]
+        [Required(ErrorMessage = "You must enter a date.")]
         public DateTime Date { get; set; }
 
         /// <summary>
         /// Gets or sets the city for the reservation.
         /// </summary>
         [Display(Name = "City")]
-        [Required(ErrorMessage = "Musisz wpisać miasto")]
+        [Required(ErrorMessage = "You must enter a city.")]
         public string City { get; set; }
 
         /// <summary>
         /// Gets or sets the address for the reservation.
         /// </summary>
         [Display(Name = "Address")]
-        [Required(ErrorMessage = "Musisz podać adres")]
+        [Required(ErrorMessage = "You must enter an address.")]
         public string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the room number for the reservation.
         /// </summary>
         [Display(Name = "Room")]
-        [Required(ErrorMessage = "Musisz podać numer pokoju")]
+        [Required(ErrorMessage = "You must enter a room number.")]
         public int Room { get; set; }
 
         /// <summary>
         /// Gets or sets the owner of the reservation.
         /// </summary>
         [Display(Name = "Owner")]
-        [Required(ErrorMessage = "Musisz wpisać właściela")]
+        [Required(ErrorMessage = "You must enter an owner.")]
         public string Owner { get; set; }
 
         /// <summary>
         /// Gets or sets the price for the reservation.
         /// </summary>
         [Display(Name = "Price")]
-        [Required(ErrorMessage = "Musisz wpisać cenę")]
+        [Required(ErrorMessage = "You must enter a price.")]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or sets the number of nights for the reservation.
         /// </summary>
-        [Display(Name = "NumberOfNights")]
-        [Required(ErrorMessage = "Musisz podać liczbę nocy hotelowych")]
+        [Display(Name = "Number of Nights")]
+        [Required(ErrorMessage = "You must enter the number of nights.")]
         public int NumberOfNights { get; set; }
 
         /// <summary>
