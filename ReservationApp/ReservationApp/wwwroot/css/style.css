@@ -16,9 +16,9 @@ body {
         text-align: center
     }
 
-.form-group {
-    padding: 10px;
-}
+    .form-group {
+        padding: 10px;
+    }
 
     .my-btn{
         text-align: right;
@@ -36,18 +36,36 @@ body {
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
-.form-control:-webkit-autofill,
-.form-control:-webkit-autofill:hover,
-.form-control:-webkit-autofill:focus,
-.custom-form textarea:-webkit-autofill,
-.custom-form textarea:-webkit-autofill:hover,
-.custom-form textarea:-webkit-autofill:focus,
-.custom-form select:-webkit-autofill,
-.custom-form select:-webkit-autofill:hover,
-.custom-form select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
+    .statistics-link {
+        text-decoration: none;
+        padding: 5px 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: #333;
+    }
+
+    .statistics-link:hover {
+        background-color: #f0f0f0;
+        color: #333 !important;
+    }
+
+    .statistics-div {
+        margin: 20px 0 20px 0;
+    }
+
+    .form-control:-webkit-autofill,
+    .form-control:-webkit-autofill:hover,
+    .form-control:-webkit-autofill:focus,
+    .custom-form textarea:-webkit-autofill,
+    .custom-form textarea:-webkit-autofill:hover,
+    .custom-form textarea:-webkit-autofill:focus,
+    .custom-form select:-webkit-autofill,
+    .custom-form select:-webkit-autofill:hover,
+    .custom-form select:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 
 
 body.night-mode {
@@ -89,6 +107,20 @@ body.night-mode {
     body.night-mode .nav-link,
     body.night-mode .navbar-brand {
         color: #fff !important;
+    }
+
+    body.night-mode .statistics-link {
+        text-decoration: none;
+        padding: 5px 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: #fff;
+    }
+
+    body.night-mode .statistics-link:hover {
+        background-color: #f0f0f0;
+        color: #333 !important;
     }
 
     body.night-mode .form-control:-webkit-autofill,

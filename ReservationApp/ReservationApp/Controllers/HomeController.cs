@@ -193,15 +193,32 @@ namespace ReservationApp.Controllers
         /// </summary>
         /// <returns>The statistics view with relevant data.</returns>
         [Authorize(Roles = "Admin")]
-        public IActionResult Statistics()
+        public IActionResult Statistics(string period = "last 7 days")
         {
-            DateTime oneWeekAgo = DateTime.Now.AddDays(-7);
+            DateTime startDate;
 
-            int guestsThisWeek = _context.Reservations
-                .Where(r => r.Date >= oneWeekAgo)
-                .Sum(r => r.Id);
+            switch (period.ToLower())
+            {
+                case "last 7 days":
+                    startDate = DateTime.Now.AddDays(-7);
+                    break;
+                case "this month":
+                    startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    break;
+                case "this year":
+                    startDate = new DateTime(DateTime.Now.Year, 1, 1);
+                    break;
+                default:
+                    startDate = DateTime.Now.AddDays(-7); break;
+            }
 
-            ViewBag.GuestsThisWeek = guestsThisWeek;
+            int reservationCount = _context.Reservations.Count(r => r.Date >= startDate);
+
+            //int guestsThisWeek = _context.Reservations
+            //    .Where(r => r.Date >= oneWeekAgo)
+            //    .Sum(r => r.Id);
+            ViewBag.Period = period;
+            ViewBag.GuestsCount = reservationCount;
 
             return View();
         }
