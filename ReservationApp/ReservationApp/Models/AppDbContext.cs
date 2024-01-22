@@ -22,6 +22,8 @@ namespace ReservationApp.Models
         /// </summary>
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<Room> Room { get; set; }
+
         /// <summary>
         /// Configures the database context during model creation.
         /// </summary>
@@ -29,7 +31,8 @@ namespace ReservationApp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Seed();
+
+            modelBuilder.Seed();
         }
     }
 }

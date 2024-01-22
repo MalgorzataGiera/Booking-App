@@ -42,9 +42,10 @@ namespace ReservationApp.Models
         /// <summary>
         /// Gets or sets the room number for the reservation.
         /// </summary>
-        [Display(Name = "Room")]
-        [Required(ErrorMessage = "You must enter a room number.")]
-        public int Room { get; set; }
+        [ValidateNever]
+        public int RoomId { get; set; }
+        [ValidateNever]
+        public Room Room { get; set; }
 
         /// <summary>
         /// Gets or sets the owner of the reservation.

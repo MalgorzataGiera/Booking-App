@@ -12,8 +12,8 @@ using ReservationApp.Models;
 namespace ReservationApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240120004420_AddRoom")]
-    partial class AddRoom
+    [Migration("20240120223018_kluczobcy")]
+    partial class kluczobcy
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,22 @@ namespace ReservationApp.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "0350047e-33f7-4e7c-9d46-6c859bb5732f",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "889c2db3-81ce-4801-9b8c-9e43799153f9",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -140,6 +156,40 @@ namespace ReservationApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "86bf2243-fdc2-4c95-bb94-a88fd4c3a2ea",
+                            Email = "user1@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@EXAMPLE.COM",
+                            NormalizedUserName = "USER1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMdhr7o1GGUPZOYVfVF9cM9DgwhLNxAMvWr0RLR0RNLQZaafH1Xg2wSiHCa+BsdU2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f8bbde2-4e6c-424a-9c0c-661d3ac85c27",
+                            TwoFactorEnabled = false,
+                            UserName = "user1@example.com"
+                        },
+                        new
+                        {
+                            Id = "072192f4-1346-405d-8458-eacd240c8107",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "12905988-9627-479d-a9a6-423cf23e5434",
+                            Email = "admin1@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN1@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN1@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIqr1DIJtdy9E+Scuzt3NoBmfftMKgi9Cbj3pDMC+oQ+uTtFMduy9yRUdFM1sOtRPg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d06e12f4-2a27-456b-860f-e72051be1f03",
+                            TwoFactorEnabled = false,
+                            UserName = "admin1@example.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -202,6 +252,18 @@ namespace ReservationApp.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "072192f4-1346-405d-8458-eacd240c8107",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            RoleId = "2"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -256,14 +318,57 @@ namespace ReservationApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Room")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceivedById");
 
+                    b.HasIndex("RoomId");
+
                     b.ToTable("Reservations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Sample Address",
+                            City = "Sample City",
+                            Date = new DateTime(2024, 1, 20, 23, 30, 18, 700, DateTimeKind.Local).AddTicks(7790),
+                            NumberOfNights = 3,
+                            Owner = "Sample Owner",
+                            Price = 100.00m,
+                            ReceivedById = "072192f4-1346-405d-8458-eacd240c8107",
+                            RoomId = 1
+                        });
+                });
+
+            modelBuilder.Entity("ReservationApp.Models.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(8, 2)");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Room");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Price = 100.00m,
+                            RoomNumber = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -325,7 +430,20 @@ namespace ReservationApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ReservationApp.Models.Room", "Room")
+                        .WithMany("Reservations")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ReceivedBy");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("ReservationApp.Models.Room", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

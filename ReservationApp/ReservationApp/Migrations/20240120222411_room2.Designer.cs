@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationApp.Models;
 
@@ -11,9 +12,11 @@ using ReservationApp.Models;
 namespace ReservationApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240120222411_room2")]
+    partial class room2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,14 +55,14 @@ namespace ReservationApp.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "0350047e-33f7-4e7c-9d46-6c859bb5732f",
+                            ConcurrencyStamp = "cca683d9-dd48-447e-bd27-4383331a7145",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "889c2db3-81ce-4801-9b8c-9e43799153f9",
+                            ConcurrencyStamp = "ac7be0da-389f-4a9e-89a0-a2517d873963",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -157,33 +160,33 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            Id = "78f406b9-0be2-40e3-8af2-7ca8738285ea",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86bf2243-fdc2-4c95-bb94-a88fd4c3a2ea",
+                            ConcurrencyStamp = "2b23611c-63d5-4cc9-9f20-7b0458c664f8",
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMdhr7o1GGUPZOYVfVF9cM9DgwhLNxAMvWr0RLR0RNLQZaafH1Xg2wSiHCa+BsdU2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPh6GCzE66OkVTtmGzMvwSaJYNqWkek/enI/7FJpMKkvMo0ZgBd6Oxl46CfjY4WWGA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f8bbde2-4e6c-424a-9c0c-661d3ac85c27",
+                            SecurityStamp = "5b4f7e3c-d728-4ac4-88cc-698ab001ab53",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
                         new
                         {
-                            Id = "072192f4-1346-405d-8458-eacd240c8107",
+                            Id = "f1a1fdba-360d-4098-9928-52abd032d1c3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "12905988-9627-479d-a9a6-423cf23e5434",
+                            ConcurrencyStamp = "c91c4685-7156-4d1d-83e9-504536c6e05e",
                             Email = "admin1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN1@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIqr1DIJtdy9E+Scuzt3NoBmfftMKgi9Cbj3pDMC+oQ+uTtFMduy9yRUdFM1sOtRPg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFAA1Xk8dYNEoC6YImwGf+MJIRGu41hf+WdSKvdYXRtrsAziaLe3bAF8o7r7MebpAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d06e12f4-2a27-456b-860f-e72051be1f03",
+                            SecurityStamp = "fe3186cf-27b0-4432-a4d8-d0db0cfba56b",
                             TwoFactorEnabled = false,
                             UserName = "admin1@example.com"
                         });
@@ -253,12 +256,12 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "072192f4-1346-405d-8458-eacd240c8107",
+                            UserId = "f1a1fdba-360d-4098-9928-52abd032d1c3",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            UserId = "78f406b9-0be2-40e3-8af2-7ca8738285ea",
                             RoleId = "2"
                         });
                 });
@@ -315,14 +318,12 @@ namespace ReservationApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int>("Room")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceivedById");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("Reservations");
 
@@ -332,12 +333,12 @@ namespace ReservationApp.Migrations
                             Id = 1,
                             Address = "Sample Address",
                             City = "Sample City",
-                            Date = new DateTime(2024, 1, 20, 23, 30, 18, 700, DateTimeKind.Local).AddTicks(7790),
+                            Date = new DateTime(2024, 1, 20, 23, 24, 11, 85, DateTimeKind.Local).AddTicks(3279),
                             NumberOfNights = 3,
                             Owner = "Sample Owner",
                             Price = 100.00m,
-                            ReceivedById = "072192f4-1346-405d-8458-eacd240c8107",
-                            RoomId = 1
+                            ReceivedById = "f1a1fdba-360d-4098-9928-52abd032d1c3",
+                            Room = 101
                         });
                 });
 
@@ -427,20 +428,7 @@ namespace ReservationApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReservationApp.Models.Room", "Room")
-                        .WithMany("Reservations")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ReceivedBy");
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("ReservationApp.Models.Room", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

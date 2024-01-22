@@ -22,7 +22,7 @@
                     <td>@reservation.Date.ToShortDateString()</td>
                     <td>@reservation.City</td>
                     <td>@reservation.Owner</td>
-                    <td>@reservation.Room</td>
+                    <td>@reservation.RoomId</td>
                     <td><a class="btn btn-outline-info" asp-controller="Home" asp-action="Details" asp-route-id=@reservation.Id>Details</a>
                         <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edit</a>
                         <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Delete" asp-route-id=@reservation.Id>Delete</a>

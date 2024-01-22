@@ -31,9 +31,9 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Room">Room</label>
-        <input class="form-control" asp-for="Room" />
-        <span class="text-danger" asp-validation-for="Room"></span>
+        <label asp-for="RoomId">Room</label>
+        <select class="form-control" asp-for="RoomId" asp-items="@ViewBag.Rooms"></select>
+        <span class="text-danger" asp-validation-for="RoomId"></span>
     </div>
     
     <div class="mb-3">

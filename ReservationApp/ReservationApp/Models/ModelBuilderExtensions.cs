@@ -56,6 +56,14 @@ namespace ReservationApp.Models
                 new IdentityUserRole<string> { RoleId = "2", UserId = UserId }
             );
 
+            modelBuilder.Entity<Room>().HasData(
+                new Room
+                {
+                    Id = 1,
+                    RoomNumber = 1,
+                    Price = 100.00m
+                });
+
             // Save changes to the database
             modelBuilder.Entity<Reservation>().HasData(
                 new Reservation
@@ -64,7 +72,7 @@ namespace ReservationApp.Models
                     Date = DateTime.Now,
                     City = "Sample City",
                     Address = "Sample Address",
-                    Room = 101,
+                    RoomId = 1,
                     Owner = "Sample Owner",
                     Price = 100.00m,
                     NumberOfNights = 3,

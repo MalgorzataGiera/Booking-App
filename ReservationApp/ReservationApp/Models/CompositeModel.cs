@@ -1,4 +1,6 @@
-﻿namespace ReservationApp.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ReservationApp.Models
 {
     /// <summary>
     /// Represents a composite model containing information about a reservation and the associated user name.
@@ -14,5 +16,6 @@
         /// Gets or sets the user name associated with the reservation.
         /// </summary>
         public string? userName { get; set; }
+
     }
 }
