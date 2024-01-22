@@ -90,41 +90,42 @@ namespace ReservationApp.Controllers
             return View(_reservations.FindById(id));
         }
 
-		/// <summary>
-		/// POST action for updating a reservation.
-		/// </summary>
-		/// <remarks>
-		/// This action updates a reservation in the system. 
-		/// If the ModelState is valid, it sets the current user as the ReceivedBy for the reservation, 
-		/// updates the reservation, and redirects to the Index action.
-		/// If the ModelState is not valid, it returns the Update view with the model containing validation errors.
-		/// </remarks>
-		/// <param name="model">The reservation model to be updated.</param>
-		/// <returns>If successful, redirects to the Index action; otherwise, returns the Update view with errors.</returns>
-		[HttpPost]
-		[Authorize]
-		public async Task<IActionResult> Create(Reservation model)
-		{
+        /// <summary>
+        /// POST action for updating a reservation.
+        /// </summary>
+        /// <remarks>
+        /// This action updates a reservation in the system. 
+        /// If the ModelState is valid, it sets the current user as the ReceivedBy for the reservation, 
+        /// updates the reservation, and redirects to the Index action.
+        /// If the ModelState is not valid, it returns the Update view with the model containing validation errors.
+        /// </remarks>
+        /// <param name="model">The reservation model to be updated.</param>
+        /// <returns>If successful, redirects to the Index action; otherwise, returns the Update view with errors.</returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Update(Reservation model)
+        {
 			// Retrieve the list of rooms to populate the dropdown
 			var rooms = _context.Room.ToList();
 			ViewBag.Room = new SelectList(rooms, "Id", "RoomNumber");
 
 			if (ModelState.IsValid)
-			{
-				// Set the current user as the ReceivedBy for the reservation
-				var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-				model.ReceivedById = userIdClaim.Value;
+            {
+                //Set the current user as the ReceivedBy for the reservation
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                model.ReceivedById = userIdClaim.Value;
 
 				model.Room = await _context.Room.FindAsync(model.RoomId);
 
-				await _reservations.CreateAsync(model);
+				await _reservations.UpdateAsync(model);
 
 				return RedirectToAction("Index");
 			}
 
-			// Return the view with validation errors if the model state is not valid
 			return View(model);
 		}
+
+
 
 		/// <summary>
 		/// GET action for displaying the delete confirmation view.
@@ -175,45 +176,37 @@ namespace ReservationApp.Controllers
             return View();
         }
 
-        /// <summary>
-        /// POST action for creating a new reservation.
-        /// </summary>
-        /// <remarks>
-        /// This action creates a new reservation in the system. 
-        /// If the ModelState is valid, it sets the current user as the ReceivedBy for the reservation, 
-        /// creates the reservation, and redirects to the Index action.
-        /// If the ModelState is not valid, it returns the Create view with the model containing validation errors.
-        /// </remarks>
-        /// <param name="model">The reservation model to be created.</param>
-        /// <returns>If successful, redirects to the Index action; otherwise, returns the Create view with errors.</returns>
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create(Reservation model)
-        {
-            var rooms = _context.Room.ToList();
-            ViewBag.Room = new SelectList(rooms, "Id", "RoomNumber");
 
-            if (ModelState.IsValid)
-            {
-                //Set the current user as the ReceivedBy for the reservation                
-                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-                model.ReceivedById = userIdClaim.Value;
 
-                model.Room = await _context.Room.FindAsync(model.RoomId);
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> Create(Reservation model)
+		{
+			// Retrieve the list of rooms to populate the dropdown
+			var rooms = _context.Room.ToList();
+			ViewBag.Room = new SelectList(rooms, "Id", "RoomNumber");
 
-                await _reservations.CreateAsync(model);
+			if (ModelState.IsValid)
+			{
+				// Set the current user as the ReceivedBy for the reservation
+				var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+				model.ReceivedById = userIdClaim.Value;
 
-                return RedirectToAction("Index");              
-            }
+				model.Room = await _context.Room.FindAsync(model.RoomId);
 
-            return View(model);
-        }
+				await _reservations.CreateAsync(model);
 
-        /// <summary>
-        /// GET action for displaying the statistics page.
-        /// </summary>
-        /// <returns>The statistics view with relevant data.</returns>
-        [Authorize(Roles = "Admin")]
+				return RedirectToAction("Index");
+			}
+
+			return View(model);
+		}
+
+		/// <summary>
+		/// GET action for displaying the statistics page.
+		/// </summary>
+		/// <returns>The statistics view with relevant data.</returns>
+		[Authorize(Roles = "Admin")]
         public IActionResult Statistics(string period = "last 7 days")
         {
             DateTime startDate;
