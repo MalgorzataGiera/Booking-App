@@ -52,7 +52,8 @@ namespace ReservationApp.Controllers
 
 				if(result.Succeeded)
 				{
-					await signInManager.SignInAsync(user, isPersistent: false);
+                    await userManager.AddToRoleAsync(user, "user");
+                    await signInManager.SignInAsync(user, isPersistent: false);
 					return RedirectToAction("index", "home");
 				}
 
