@@ -10,14 +10,14 @@
         /// </summary>
         /// <param name="reservation">The reservation to be created.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task CreateAsync(Reservation reservation);
+        Task<Reservation> CreateAsync(Reservation reservation);
 
         /// <summary>
         /// Asynchronously updates an existing reservation.
         /// </summary>
         /// <param name="reservation">The reservation to be updated.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task UpdateAsync(Reservation reservation);
+        Task<Reservation> UpdateAsync(Reservation reservation);
 
         /// <summary>
         /// Asynchronously deletes a reservation.

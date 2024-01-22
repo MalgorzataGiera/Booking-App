@@ -82,12 +82,13 @@ namespace ReservationApp.Controllers
         /// <returns>The update view of the reservation.</returns>
         [HttpGet]
         [Authorize]
-        public IActionResult Update(int id)
+        public IActionResult Update(CompositeModel model, int id)
         {
             var rooms = _context.Room.ToList();
+            model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
+            model.reservation = _reservations.FindById(id);
 
-            ViewBag.Rooms = new SelectList(rooms, "Id", "RoomNumber");
-            return View(_reservations.FindById(id));
+            return View(model);
         }
 
         /// <summary>
@@ -103,21 +104,21 @@ namespace ReservationApp.Controllers
         /// <returns>If successful, redirects to the Index action; otherwise, returns the Update view with errors.</returns>
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Update(Reservation model)
+        public async Task<IActionResult> Update(CompositeModel model)
         {
 			// Retrieve the list of rooms to populate the dropdown
 			var rooms = _context.Room.ToList();
-			ViewBag.Room = new SelectList(rooms, "Id", "RoomNumber");
+            model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
 
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //Set the current user as the ReceivedBy for the reservation
                 var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-                model.ReceivedById = userIdClaim.Value;
+                model.reservation.ReceivedById = userIdClaim.Value;
 
-				model.Room = await _context.Room.FindAsync(model.RoomId);
+                model.reservation.Room = await _context.Room.FindAsync(model.reservation.RoomId);
 
-				await _reservations.UpdateAsync(model);
+                model.reservation = await _reservations.UpdateAsync(model.reservation);
 
 				return RedirectToAction("Index");
 			}
@@ -169,36 +170,38 @@ namespace ReservationApp.Controllers
         public IActionResult Create()
         {
             var rooms = _context.Room.ToList();
-
-            ViewBag.Rooms = new SelectList(rooms, "Id", "RoomNumber");
-            
-
-            return View();
+            var model = new CompositeModel
+            {
+                roomsSelectList = new SelectList(rooms, "Id", "RoomNumber")
+            };
+            return View(model);
         }
 
-
-
-		[HttpPost]
+        /// <summary>
+        /// POST action for creating a new reservation.
+        /// </summary>
+        /// <param name="model">The composite model containing the reservation information and rooms list.</param>
+        /// <returns>Returns a redirect to the Index action if the reservation is successfully created; otherwise, returns the Create view with validation errors.</returns>
+        [HttpPost]
 		[Authorize]
-		public async Task<IActionResult> Create(Reservation model)
+		public async Task<IActionResult> Create(CompositeModel model)
 		{
-			// Retrieve the list of rooms to populate the dropdown
-			var rooms = _context.Room.ToList();
-			ViewBag.Room = new SelectList(rooms, "Id", "RoomNumber");
+            var rooms = _context.Room.ToList();
 
-			if (ModelState.IsValid)
-			{
-				// Set the current user as the ReceivedBy for the reservation
-				var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-				model.ReceivedById = userIdClaim.Value;
+            model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
 
-				model.Room = await _context.Room.FindAsync(model.RoomId);
+            if (ModelState.IsValid)
+            {
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);                
 
-				await _reservations.CreateAsync(model);
+                model.reservation.ReceivedById = userIdClaim.Value;
 
-				return RedirectToAction("Index");
+                model.reservation.Room = await _context.Room.FindAsync(model.reservation.RoomId);
+
+                model.reservation = await _reservations.CreateAsync(model.reservation);
+
+                return RedirectToAction("Index");
 			}
-
 			return View(model);
 		}
 
@@ -228,9 +231,6 @@ namespace ReservationApp.Controllers
 
             int reservationCount = _context.Reservations.Count(r => r.Date >= startDate);
 
-            //int guestsThisWeek = _context.Reservations
-            //    .Where(r => r.Date >= oneWeekAgo)
-            //    .Sum(r => r.Id);
             ViewBag.Period = period;
             ViewBag.GuestsCount = reservationCount;
 

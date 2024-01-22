@@ -60,14 +60,16 @@ namespace ReservationApp.Models
         [Display(Name = "Price")]
         [Required(ErrorMessage = "You must enter a price.")]
         [Column(TypeName = "decimal(8, 2)")]
-        public decimal Price { get; set; }
+		[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
+		public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or sets the number of nights for the reservation.
         /// </summary>
         [Display(Name = "Number of Nights")]
         [Required(ErrorMessage = "You must enter the number of nights.")]
-        public int NumberOfNights { get; set; }
+		[Range(1, int.MaxValue, ErrorMessage = "Number of nights must be set to a positive value")]
+		public int NumberOfNights { get; set; }
 
         /// <summary>
         /// Gets or sets the user who received the reservation.

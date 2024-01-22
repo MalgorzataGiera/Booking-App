@@ -23,10 +23,11 @@ namespace ReservationApp.Models
         /// </summary>
         /// <param name="reservation">The reservation to be created.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task CreateAsync(Reservation reservation)
+        public async Task<Reservation> CreateAsync(Reservation reservation)
         {
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
+            return reservation;
         }
 
         /// <summary>
@@ -45,10 +46,11 @@ namespace ReservationApp.Models
         /// </summary>
         /// <param name="reservation">The reservation to be updated.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task UpdateAsync(Reservation reservation)
+        public async Task<Reservation> UpdateAsync(Reservation reservation)
         {
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
+            return reservation;
         }
 
         /// <summary>

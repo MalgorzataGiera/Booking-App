@@ -1,48 +1,48 @@
-﻿@model Reservation
+﻿@model CompositeModel
 @{
 }
 <h1>Add new reservation</h1>
 <form asp-controller="Home" asp-action="Create" method="post" class="custom-form">
     <div class="mb-3">
-        <label asp-for="Date"></label>
-        <input class="form-control" asp-for="Date"/>
-        <span class="text-danger" asp-validation-for="Date"></span>
+        <label asp-for="reservation.Date"></label>
+        <input class="form-control" asp-for="reservation.Date"/>
+        <span class="text-danger" asp-validation-for="reservation.Date"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Owner"></label>
-        <input class="form-control" asp-for="Owner" />
-        <span class="text-danger" asp-validation-for="Owner"></span>
+        <label asp-for="reservation.Owner"></label>
+        <input class="form-control" asp-for="reservation.Owner" />
+        <span class="text-danger" asp-validation-for="reservation.Owner"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="City"></label>
-        <input class="form-control" asp-for="City" />
-        <span class="text-danger" asp-validation-for="City"></span>
+        <label asp-for="reservation.City"></label>
+        <input class="form-control" asp-for="reservation.City" />
+        <span class="text-danger" asp-validation-for="reservation.City"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Address"></label>
-        <input class="form-control" asp-for="Address" />
-        <span class="text-danger" asp-validation-for="Address"></span>
+        <label asp-for="reservation.Address"></label>
+        <input class="form-control" asp-for="reservation.Address" />
+        <span class="text-danger" asp-validation-for="reservation.Address"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="RoomId">Room</label>
-        <select class="form-control" asp-for="RoomId" asp-items="@ViewBag.Rooms"></select>
-        <span class="text-danger" asp-validation-for="RoomId"></span>
+        <label asp-for="reservation.RoomId">Room</label>
+        <select class="form-control" asp-for="reservation.RoomId" asp-items="Model.roomsSelectList"></select>
+        <span class="text-danger" asp-validation-for="reservation.RoomId"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Price"></label>
-        <input class="form-control" asp-for="Price"/>
-        <span class="text-danger" asp-validation-for="Price"></span>
+        <label asp-for="reservation.Price"></label>
+        <input class="form-control" asp-for="reservation.Price" />
+        <span class="text-danger" asp-validation-for="reservation.Price"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="NumberOfNights"></label>
-        <input class="form-control" asp-for="NumberOfNights" />
-        <span class="text-danger" asp-validation-for="NumberOfNights"></span>
+        <label asp-for="reservation.NumberOfNights"></label>
+        <input class="form-control" asp-for="reservation.NumberOfNights" />
+        <span class="text-danger" asp-validation-for="reservation.NumberOfNights"></span>
     </div>
 
     <div class="my-btn">

@@ -1,51 +1,48 @@
-﻿@model Reservation
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CompositeModel
 @{
 }
 <h1>Update a reservation</h1>
 <form asp-controller="Home" asp-action="Update" method="post">
     <div class="mb-3">
-        <label asp-for="Date">Date</label>
-        <input class="form-control" asp-for="Date" />
-        <span class="text-danger" asp-validation-for="Date"></span>
+        <label asp-for="reservation.Date">Date</label>
+        <input class="form-control" asp-for="reservation.Date" />
+        <span class="text-danger" asp-validation-for="reservation.Date"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Owner">Owner</label>
-        <input class="form-control" asp-for="Owner" />
-        <span class="text-danger" asp-validation-for="Owner"></span>
+        <label asp-for="reservation.Owner">Owner</label>
+        <input class="form-control" asp-for="reservation.Owner" />
+        <span class="text-danger" asp-validation-for="reservation.Owner"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="City">City</label>
-        <input class="form-control" asp-for="City" />
-        <span class="text-danger" asp-validation-for="City"></span>
+        <label asp-for="reservation.City">City</label>
+        <input class="form-control" asp-for="reservation.City" />
+        <span class="text-danger" asp-validation-for="reservation.City"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Address">Address</label>
-        <input class="form-control" asp-for="Address" />
-        <span class="text-danger" asp-validation-for="Address"></span>
+        <label asp-for="reservation.Address">Address</label>
+        <input class="form-control" asp-for="reservation.Address" />
+        <span class="text-danger" asp-validation-for="reservation.Address"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="RoomId">Room</label>
-        <select class="form-control" asp-for="RoomId" asp-items="@ViewBag.Rooms"></select>
-        <span class="text-danger" asp-validation-for="RoomId"></span>
+        <label asp-for="reservation.RoomId">Room</label>
+        <select class="form-control" asp-for="reservation.RoomId" asp-items="Model.roomsSelectList"></select>
+        <span class="text-danger" asp-validation-for="reservation.RoomId"></span>
     </div>
     
     <div class="mb-3">
-        <label asp-for="Price">Cena</label>
-        <input class="form-control" asp-for="Price" />
-        <span class="text-danger" asp-validation-for="Price"></span>
+        <label asp-for="reservation.Price">Cena</label>
+        <input class="form-control" asp-for="reservation.Price" />
+        <span class="text-danger" asp-validation-for="reservation.Price"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="NumberOfNights"></label>
-        <input class="form-control" asp-for="NumberOfNights" />
-        <span class="text-danger" asp-validation-for="NumberOfNights"></span>
+        <label asp-for="reservation.NumberOfNights"></label>
+        <input class="form-control" asp-for="reservation.NumberOfNights" />
+        <span class="text-danger" asp-validation-for="reservation.NumberOfNights"></span>
     </div>
 
     <div class="my-btn">

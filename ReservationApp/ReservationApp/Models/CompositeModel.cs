@@ -17,5 +17,7 @@ namespace ReservationApp.Models
         /// </summary>
         public string? userName { get; set; }
 
+        public SelectList? roomsSelectList { get; set; }
+
     }
 }
