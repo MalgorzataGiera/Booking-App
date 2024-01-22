@@ -88,6 +88,8 @@ namespace ReservationApp.Controllers
             model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
             model.reservation = _reservations.FindById(id);
 
+            model.reservation.Id = id;
+
             return View(model);
         }
 

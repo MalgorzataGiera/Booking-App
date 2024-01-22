@@ -3,6 +3,7 @@
 }
 <h1>Update a reservation</h1>
 <form asp-controller="Home" asp-action="Update" method="post">
+    <input type="hidden" asp-for="reservation.Id" />
     <div class="mb-3">
         <label asp-for="reservation.Date">Date</label>
         <input class="form-control" asp-for="reservation.Date" />
