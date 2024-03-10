@@ -214,6 +214,12 @@ namespace ReservationApp.Controllers
                     ModelState.AddModelError("reservation.RoomId", "The room is already reserved for this date.");
                     return View(model);
                 }
+
+                if (model.reservation.Date.Date < DateTime.Now.Date)
+                {
+                    ModelState.AddModelError("reservation.Date", "Reservation date cannot be in the past.");
+                    return View(model);
+                }
                 model.reservation = await _reservations.CreateAsync(model.reservation);
 
                 return RedirectToAction("Index");
