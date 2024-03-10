@@ -182,36 +182,50 @@ namespace ReservationApp.Controllers
         /// <summary>
         /// POST action for creating a new reservation.
         /// </summary>
-        /// <param name="model">The composite model containing the reservation information and rooms list.</param>
-        /// <returns>Returns a redirect to the Index action if the reservation is successfully created; otherwise, returns the Create view with validation errors.</returns>
+        /// <param name="model">The composite model containing reservation data.</param>
+        /// <returns>Returns a redirection to the Index action if the reservation is successfully created, otherwise returns the view with validation errors.</returns>
         [HttpPost]
-		[Authorize]
-		public async Task<IActionResult> Create(CompositeModel model)
-		{
+        [Authorize]
+        public async Task<IActionResult> Create(CompositeModel model)
+        {
             var rooms = _context.Room.ToList();
 
             model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
 
             if (ModelState.IsValid)
             {
-                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);                
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
 
                 model.reservation.ReceivedById = userIdClaim.Value;
 
                 model.reservation.Room = await _context.Room.FindAsync(model.reservation.RoomId);
 
+                var res = await _context.Reservations
+                    .FirstOrDefaultAsync(r => r.RoomId == model.reservation.RoomId);
+                var dateEnd = res.Date.AddDays(res.NumberOfNights).Date;
+                var newResDateEnd = model.reservation.Date.AddDays(model.reservation.NumberOfNights).Date;
+
+                var existingReservation = await _context.Reservations
+                    .FirstOrDefaultAsync(r => r.RoomId == model.reservation.RoomId && (r.Date.Date >= model.reservation.Date.Date && r.Date.Date <= newResDateEnd)
+                    || (dateEnd >= model.reservation.Date.Date && dateEnd <= newResDateEnd));
+
+                if (existingReservation != null)
+                {
+                    ModelState.AddModelError("reservation.RoomId", "The room is already reserved for this date.");
+                    return View(model);
+                }
                 model.reservation = await _reservations.CreateAsync(model.reservation);
 
                 return RedirectToAction("Index");
-			}
-			return View(model);
-		}
+            }
+            return View(model);
+        }
 
-		/// <summary>
-		/// GET action for displaying the statistics page.
-		/// </summary>
-		/// <returns>The statistics view with relevant data.</returns>
-		[Authorize(Roles = "Admin")]
+        /// <summary>
+        /// GET action for displaying the statistics page.
+        /// </summary>
+        /// <returns>The statistics view with relevant data.</returns>
+        [Authorize(Roles = "Admin")]
         public IActionResult Statistics(string period = "last 7 days")
         {
             DateTime startDate;
