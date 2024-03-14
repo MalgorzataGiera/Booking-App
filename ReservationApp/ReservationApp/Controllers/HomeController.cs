@@ -17,18 +17,20 @@ namespace ReservationApp.Controllers
 		private readonly IReservationService _reservations;
 		private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
-
+        private readonly UserManager<IdentityUser> _userManager;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="reservations">The reservation service.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="context">The database context.</param>
-        public HomeController(IReservationService reservations, ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(IReservationService reservations, ILogger<HomeController> logger, AppDbContext context, UserManager<IdentityUser> userManager)
         {
             _reservations = reservations;
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -257,6 +259,18 @@ namespace ReservationApp.Controllers
             ViewBag.GuestsCount = reservationCount;
 
             return View();
+        }
+
+        /// <summary>
+        /// Displays a list of all users in the application.
+        /// </summary>
+        /// <returns>The view containing the list of users.</returns>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
         }
 
         /// <summary>

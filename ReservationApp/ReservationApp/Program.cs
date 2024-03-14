@@ -19,7 +19,8 @@ namespace ReservationApp
 
             // Configure Identity
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             // Configure XML support in MVC
             builder.Services.AddMvc().AddXmlSerializerFormatters();
