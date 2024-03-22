@@ -1,0 +1,20 @@
+﻿@model Room
+@{
+}
+<h1>Add new reservation</h1>
+<form asp-controller="Home" asp-action="CreateRoom" method="post" class="custom-form">
+    <div class="mb-3">
+        <label asp-for="RoomNumber"></label>
+        <input class="form-control" asp-for="RoomNumber" />
+        <span class="text-danger" asp-validation-for="RoomNumber"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price"></label>
+        <input class="form-control" asp-for="Price" />
+        <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+
+    <div class="my-btn">
+        <button class="btn btn-secondary" type="submit">Create</button>
+    </div>
+</form>

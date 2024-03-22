@@ -67,6 +67,10 @@ body {
         transition: background-color 5000s ease-in-out 0s;
     }
 
+    .pagination {
+        justify-content: center;
+    }
+
 
 body.night-mode {
     background-color: #333;
@@ -143,7 +147,7 @@ body.night-mode {
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: #fff;
     }
-    
+        
     body.night-mode .pagination .page-link {
         background-color: #333;
         border-color: #333;

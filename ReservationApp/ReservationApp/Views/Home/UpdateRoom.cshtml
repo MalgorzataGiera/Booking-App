@@ -1,0 +1,21 @@
+﻿@model Room
+@{
+}
+<h1>Update a room</h1>
+<form asp-controller="Home" asp-action="UpdateRoom" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="RoomNumber"></label>
+        <input class="form-control" asp-for="RoomNumber" />
+        <span class="text-danger" asp-validation-for="RoomNumber"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price"></label>
+        <input class="form-control" asp-for="Price" />
+        <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+
+    <div class="my-btn">
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</form>

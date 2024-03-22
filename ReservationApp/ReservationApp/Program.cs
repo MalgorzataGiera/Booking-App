@@ -34,6 +34,9 @@ namespace ReservationApp
             // Register the reservation service (MemoryReservationService)
             builder.Services.AddScoped<IReservationService, MemoryReservationService>();
 
+            // Register the romm service
+            builder.Services.AddScoped<IRoomService, RoomService>();
+
             // Add controllers and views to the container
             builder.Services.AddControllersWithViews();
 

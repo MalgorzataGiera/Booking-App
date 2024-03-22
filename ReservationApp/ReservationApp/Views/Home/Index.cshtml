@@ -6,7 +6,7 @@
 <h1>Reservations</h1>
 <div>
     <table class="table">
-        <thead>
+        <thead class="table-items">
             <tr>
                 <th>Date</th>
                 <th>City</th>
@@ -34,7 +34,7 @@
 </div>
 
 <nav aria-label="Reservations page navigation">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination">
         @if (Model.IsPrevious)
         {
             <li class="page-item">

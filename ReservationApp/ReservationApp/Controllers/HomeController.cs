@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using System.Drawing;
+using System.Security.Policy;
 
 namespace ReservationApp.Controllers
 {
@@ -21,6 +22,7 @@ namespace ReservationApp.Controllers
 		private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IRoomService _rooms;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
@@ -28,12 +30,13 @@ namespace ReservationApp.Controllers
         /// <param name="reservations">The reservation service.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="context">The database context.</param>
-        public HomeController(IReservationService reservations, ILogger<HomeController> logger, AppDbContext context, UserManager<IdentityUser> userManager)
+        public HomeController(IReservationService reservations, ILogger<HomeController> logger, AppDbContext context, UserManager<IdentityUser> userManager, IRoomService rooms)
         {
             _reservations = reservations;
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _rooms = rooms;
         }
 
         /// <summary>
@@ -286,5 +289,113 @@ namespace ReservationApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Displays a list of rooms with pagination.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="size">The number of items per page.</param>
+        /// <returns>The view with the list of rooms.</returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RoomsList([FromQuery] int page = 1, [FromQuery] int size = 10)
+        {
+            return View(_rooms.FindPage(page, size));
+        }
+
+        /// <summary>
+        /// Displays the form to update a room.
+        /// </summary>
+        /// <param name="id">The id of the room to be updated.</param>
+        /// <returns>The view with the form to update the room.</returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateRoom(int id)
+        {
+            var x = _rooms.FindRoomByIdAsync(id);
+            return View(_rooms.FindRoomByIdAsync(id));
+        }
+
+        /// <summary>
+        /// Updates the room.
+        /// </summary>
+        /// <param name="model">The room to be updated.</param>
+        /// <returns>Redirects to the rooms list view after updating the room.</returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateRoom(Room model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                model = await _rooms.UpdateRoomAsync(model);
+                return RedirectToAction("RoomsList");
+            }
+            return View(model);            
+        }
+
+        /// <summary>
+        /// Displays the form to create a new room.
+        /// </summary>
+        /// <returns>The view with the form to create a new room.</returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateRoom()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Creates a new room.
+        /// </summary>
+        /// <param name="model">The room model containing room data.</param>
+        /// <returns>Redirects to the rooms list view after creating the room.</returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateRoom(Room model)
+        {
+            if(ModelState.IsValid)
+            {
+                var existingRoom = await _context.Room
+                    .FirstOrDefaultAsync(r => r.RoomNumber == model.RoomNumber);
+
+                if (existingRoom != null)
+                {
+                    ModelState.AddModelError("RoomNumber", "The room with that numer already exist.");
+                    return View(model);
+                }
+
+                model = await _rooms.CreateRoomAsync(model);
+                return RedirectToAction("RoomsList");
+            }
+            return View(model);
+        }
+
+        /// <summary>
+        /// Displays the form to delete a room.
+        /// </summary>
+        /// <param name="id">The id of the room to be deleted.</param>
+        /// <returns>The view with the form to delete the room.</returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteRoom(int id)
+        {
+            return View(_rooms.FindRoomByIdAsync(id));
+        }
+
+        /// <summary>
+        /// Deletes a room.
+        /// </summary>
+        /// <param name="id">The id of the room to be deleted.</param>
+        /// <returns>Redirects to the rooms list view after deleting the room.</returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteRoomConfirmed(int id)
+        {
+            var room = await _context.Room.FindAsync(id);
+
+            await _rooms.DeleteRoomAsync(room);
+
+            return RedirectToAction("RoomsList");
+        }
     }
 }

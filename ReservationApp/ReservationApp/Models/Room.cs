@@ -34,6 +34,6 @@ namespace ReservationApp.Models
 		/// <summary>
 		/// Gets or sets the reservations associated with the room.
 		/// </summary>
-		public List<Reservation> Reservations { get; set; }
+		public List<Reservation>? Reservations { get; set; }
 	}
 }

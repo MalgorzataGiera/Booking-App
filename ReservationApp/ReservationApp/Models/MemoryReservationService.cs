@@ -73,11 +73,11 @@ namespace ReservationApp.Models
         }
 
         /// <summary>
-        /// Finds a page of reservations.
+        /// Finds a page of rooms.
         /// </summary>
         /// <param name="page">The page number.</param>
         /// <param name="size">The page size.</param>
-        /// <returns>A paging list of reservations.</returns>
+        /// <returns>A paging list of rooms.</returns>
         public PagingList<Reservation> FindPage(int page, int size)
         {
             return PagingList<Reservation>.Create(
