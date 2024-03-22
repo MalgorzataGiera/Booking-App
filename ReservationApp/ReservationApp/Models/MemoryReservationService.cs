@@ -72,6 +72,24 @@ namespace ReservationApp.Models
             return _context.Reservations.Find(id);
         }
 
+        /// <summary>
+        /// Finds a page of reservations.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="size">The page size.</param>
+        /// <returns>A paging list of reservations.</returns>
+        public PagingList<Reservation> FindPage(int page, int size)
+        {
+            return PagingList<Reservation>.Create(
+                    (p, s) => _context.Reservations
+                            .OrderBy(b => b.Date)
+                            .Skip((p - 1) * size)
+                            .Take(s)
+                            .ToList(),
+                    _context.Reservations.Count(),
+                    page,
+                    size);
+        }
 
     }
 }

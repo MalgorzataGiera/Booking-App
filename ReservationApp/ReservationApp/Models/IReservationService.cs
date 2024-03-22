@@ -38,5 +38,7 @@
         /// <param name="id">The unique identifier of the reservation.</param>
         /// <returns>The found reservation, or null if not found.</returns>
         Reservation? FindById(int id);
+
+        PagingList<Reservation> FindPage(int page, int size);
     }
 }

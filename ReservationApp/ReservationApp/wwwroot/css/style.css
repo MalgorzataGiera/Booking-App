@@ -125,10 +125,10 @@ body.night-mode {
         color: #fff;
     }
 
-    body.night-mode .statistics-link:hover {
-        background-color: #f0f0f0;
-        color: #333 !important;
-    }
+        body.night-mode .statistics-link:hover {
+            background-color: #f0f0f0;
+            color: #333 !important;
+        }
 
     body.night-mode .form-control:-webkit-autofill,
     body.night-mode .form-control:-webkit-autofill:hover,
@@ -143,5 +143,17 @@ body.night-mode {
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: #fff;
     }
+    
+    body.night-mode .pagination .page-link {
+        background-color: #333;
+        border-color: #333;
+        color: #fff;
+    }
+
+        body.night-mode .pagination .page-link:hover {
+            background-color: #333;
+            border-color: #333;
+            color: #66686e;
+        }
 
 

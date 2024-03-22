@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ReservationApp.Models;
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using System.Drawing;
 
 namespace ReservationApp.Controllers
 {
@@ -34,13 +37,14 @@ namespace ReservationApp.Controllers
         }
 
         /// <summary>
-        /// GET action for the home page.
+        /// GET action for displaying the index page with a paginated list of reservations.
         /// </summary>
-        /// <returns>The home page view with a list of reservations.</returns>
-        public IActionResult Index()
+        /// <param name="page">The page number to display (default is 1).</param>
+        /// <param name="size">The number of items per page (default is 10).</param>
+        /// <returns>The view with the paginated list of reservations.</returns>
+        public IActionResult Index([FromQuery] int page = 1, [FromQuery] int size = 10)
         {
-            List<Reservation> reservationsList = _reservations.FindAll();
-            return View(reservationsList);
+            return View(_reservations.FindPage(page, size));
         }
 
         /// <summary>

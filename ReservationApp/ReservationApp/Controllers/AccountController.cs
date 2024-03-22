@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReservationApp.Models;
+using System.Data;
 using System.Security.Claims;
 
 namespace ReservationApp.Controllers
@@ -124,6 +125,7 @@ namespace ReservationApp.Controllers
         /// <param name="id">The ID of the user to change password for.</param>
         /// <returns>If successful, redirects to the users list page; otherwise, returns the change password view with errors.</returns>
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> ChangePassword(string id)
         {
             if (id == null)
@@ -147,6 +149,7 @@ namespace ReservationApp.Controllers
         /// <param name="newPassword">The new password for the user.</param>
         /// <returns>The action result.</returns>
         [Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<IActionResult> ChangePassword(IdentityUser model, string newPassword)
         {
             if (String.IsNullOrEmpty(newPassword))
