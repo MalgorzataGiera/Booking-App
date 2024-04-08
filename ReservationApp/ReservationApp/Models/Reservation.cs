@@ -57,10 +57,11 @@ namespace ReservationApp.Models
         /// <summary>
         /// Gets or sets the price for the reservation.
         /// </summary>
-        [Display(Name = "Price")]
-        [Required(ErrorMessage = "You must enter a price.")]
-        [Column(TypeName = "decimal(8, 2)")]
-		[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
+        //      [Display(Name = "Price")]
+        //      [Required(ErrorMessage = "You must enter a price.")]
+        //      [Column(TypeName = "decimal(8, 2)")]
+        //[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
+        [ValidateNever]        
 		public decimal Price { get; set; }
 
         /// <summary>

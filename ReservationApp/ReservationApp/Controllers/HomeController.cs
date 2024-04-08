@@ -207,7 +207,9 @@ namespace ReservationApp.Controllers
 
                 model.reservation.ReceivedById = userIdClaim.Value;
 
-                model.reservation.Room = await _context.Room.FindAsync(model.reservation.RoomId);
+                var selectedRoom = await _context.Room.FindAsync(model.reservation.RoomId);
+                model.reservation.Room = selectedRoom;
+                model.reservation.Price = selectedRoom.Price;
 
                 var res = await _context.Reservations
                     .FirstOrDefaultAsync(r => r.RoomId == model.reservation.RoomId);
@@ -229,9 +231,9 @@ namespace ReservationApp.Controllers
                     ModelState.AddModelError("reservation.Date", "Reservation date cannot be in the past.");
                     return View(model);
                 }
-                
 
-                //model.reservation = await _reservations.CreateAsync(model.reservation);
+
+                model.reservation = await _reservations.CreateAsync(model.reservation);
                 var room = _rooms.FindRoomById(model.reservation.RoomId);
                 room.Reservations.Add(model.reservation);
 
