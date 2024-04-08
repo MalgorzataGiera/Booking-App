@@ -229,7 +229,11 @@ namespace ReservationApp.Controllers
                     ModelState.AddModelError("reservation.Date", "Reservation date cannot be in the past.");
                     return View(model);
                 }
-                model.reservation = await _reservations.CreateAsync(model.reservation);
+                
+
+                //model.reservation = await _reservations.CreateAsync(model.reservation);
+                var room = _rooms.FindRoomById(model.reservation.RoomId);
+                room.Reservations.Add(model.reservation);
 
                 return RedirectToAction("Index");
             }
@@ -311,8 +315,8 @@ namespace ReservationApp.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult UpdateRoom(int id)
         {
-            var x = _rooms.FindRoomByIdAsync(id);
-            return View(_rooms.FindRoomByIdAsync(id));
+            var x = _rooms.FindRoomById(id);
+            return View(_rooms.FindRoomById(id));
         }
 
         /// <summary>
@@ -370,32 +374,5 @@ namespace ReservationApp.Controllers
             return View(model);
         }
 
-        /// <summary>
-        /// Displays the form to delete a room.
-        /// </summary>
-        /// <param name="id">The id of the room to be deleted.</param>
-        /// <returns>The view with the form to delete the room.</returns>
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult DeleteRoom(int id)
-        {
-            return View(_rooms.FindRoomByIdAsync(id));
-        }
-
-        /// <summary>
-        /// Deletes a room.
-        /// </summary>
-        /// <param name="id">The id of the room to be deleted.</param>
-        /// <returns>Redirects to the rooms list view after deleting the room.</returns>
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteRoomConfirmed(int id)
-        {
-            var room = await _context.Room.FindAsync(id);
-
-            await _rooms.DeleteRoomAsync(room);
-
-            return RedirectToAction("RoomsList");
-        }
     }
 }

@@ -29,7 +29,7 @@ namespace ReservationApp.Models
             return _context.Room.ToList();
         }
 
-        public Room? FindRoomByIdAsync(int id)
+        public Room? FindRoomById(int id)
         {
             return _context.Room.Find(id);
         }
