@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationApp.Models
 {
-	/// <summary>
-	/// Represents a room in the application.
-	/// </summary>
-	public class Room
+    /// <summary>
+    /// Represents a room in the application.
+    /// </summary>
+    public class Room
 	{
 		/// <summary>
 		/// Gets or sets the unique identifier for the room.

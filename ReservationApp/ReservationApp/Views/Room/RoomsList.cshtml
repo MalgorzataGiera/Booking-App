@@ -5,7 +5,7 @@
 
 <h1>Rooms</h1>
 <div class="my-btn" style="text-align:left; margin-left:0">
-    <a asp-action="CreateRoom" asp-controller="Home"
+    <a asp-action="CreateRoom" asp-controller="Room"
        class="btn btn-secondary" style="width:auto">
         Add new room
     </a>
@@ -25,7 +25,7 @@
                     <td>@room.RoomNumber</td>
                     <td>@room.Price</td>
                     <td>
-                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="UpdateRoom" asp-route-id=@room.Id>Edit</a>
+                        <a class="btn btn-outline-primary" asp-controller="Room" asp-action="UpdateRoom" asp-route-id=@room.Id>Edit</a>
                     </td>
                 </tr>
             }

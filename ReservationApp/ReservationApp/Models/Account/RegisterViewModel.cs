@@ -26,7 +26,7 @@ namespace ReservationApp.Models
         /// </summary>
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
-        [Compare("Password", ErrorMessage = "Hasła nie są takie same!")]
+        [Compare("Password", ErrorMessage = "Passwords do not match!")]
         public string ConfirmPassword { get; set;}
     }
 }

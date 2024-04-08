@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+
+<h1>Statistics</h1>
+<div class="statistics-div">
+    <a asp-controller="Admin" asp-action="Statistics" asp-route-period="last 7 days" class="statistics-link">Last 7 Days</a>
+    <a asp-controller="Admin" asp-action="Statistics" asp-route-period="this month" class="statistics-link">This Month</a>
+    <a asp-controller="Admin" asp-action="Statistics" asp-route-period="this year" class="statistics-link">This Year</a>
+</div>
+
+<div class="statistics-div">
+<p>@ViewBag.Period:
+    @if (ViewBag.GuestsCount == 1)
+{
+    @ViewBag.GuestsCount <span>reservation</span>
+}
+else
+{
+    @ViewBag.GuestsCount <span>reservations</span>
+}
+</p>
+</div>

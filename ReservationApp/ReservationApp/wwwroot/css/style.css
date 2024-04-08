@@ -71,14 +71,19 @@ body {
         justify-content: center;
     }
 
+    .custom-link {
+        color: #000;
+    }
+
 
 body.night-mode {
     background-color: #333;
     font-family: "Roboto", sans-serif;
     color: #fff;
 }
-    body.night-mode table {
-        color: #fff; 
+    body.night-mode table,
+    body.night-mode .custom-link {
+        color: #fff;
     }
 
     body.night-mode table thead tr th,
@@ -159,5 +164,7 @@ body.night-mode {
             border-color: #333;
             color: #66686e;
         }
+
+    
 
 

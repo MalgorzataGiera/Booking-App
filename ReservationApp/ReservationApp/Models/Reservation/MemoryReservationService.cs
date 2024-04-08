@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReservationApp.Migrations;
 
 namespace ReservationApp.Models
 {
@@ -8,14 +9,16 @@ namespace ReservationApp.Models
     public class MemoryReservationService : IReservationService
     {
         private readonly AppDbContext _context;
+        private readonly IRoomService _rooms;
 
         // <summary>
         /// Initializes a new instance of the <see cref="MemoryReservationService"/> class.
         /// </summary>
         /// <param name="context">The database context.</param>
-        public MemoryReservationService(AppDbContext context)
+        public MemoryReservationService(AppDbContext context, IRoomService rooms)
         {
             _context = context;
+            _rooms = rooms;
         }
 
         /// <summary>
@@ -26,6 +29,8 @@ namespace ReservationApp.Models
         public async Task<Reservation> CreateAsync(Reservation reservation)
         {
             _context.Reservations.Add(reservation);
+            var room = _rooms.FindRoomById(reservation.RoomId);
+            room.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
             return reservation;
         }

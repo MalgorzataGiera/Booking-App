@@ -1,78 +1,19 @@
-﻿@model PagingList<Reservation>
-@{
-    ViewData["Title"] = "Reservations";
+﻿@{
+    ViewData["Title"] = "Home";
 }
 
-<h1>Reservations</h1>
-<div>
-    <table class="table">
-        <thead class="table-items">
-            <tr>
-                <th>Date</th>
-                <th>City</th>
-                <th>Owner</th>
-                <th>Room</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var reservation in Model.Data)
-            {
-                <tr>
-                    <td>@reservation.Date.ToShortDateString()</td>
-                    <td>@reservation.City</td>
-                    <td>@reservation.Owner</td>
-                    <td>@reservation.RoomId</td>
-                    <td><a class="btn btn-outline-info" asp-controller="Home" asp-action="Details" asp-route-id=@reservation.Id>Details</a>
-                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edit</a>
-                        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Delete" asp-route-id=@reservation.Id>Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<h1>Welcome!</h1>
+<div class="card">
+    <div class="card-header">
+        Now you can easily book your room :)
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            Use the button below to make a reservation.
+        </h5>
+        <a class="btn btn-secondary" style="width:auto"
+           asp-controller="Home" asp-action="Create">
+            New reservation
+        </a>
+    </div>
 </div>
-
-<nav aria-label="Reservations page navigation">
-    <ul class="pagination">
-        @if (Model.IsPrevious)
-        {
-            <li class="page-item">
-                <a class="page-link"
-               asp-controller="Home"
-               asp-action="Index"
-               asp-route-page="@(Model.Page-1)"
-               asp-route-size="@Model.Size">
-                    Previous
-                </a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-        }
-        <li class="page-item disabled">
-            <a class="page-link">@Model.Page</a>
-        </li>
-        @if (Model.IsNext)
-        {
-            <li class="page-item">
-                <a class="page-link"
-               asp-controller="Home"
-               asp-action="Index"
-               asp-route-page="@(Model.Page+1)"
-               asp-route-size="@Model.Size">
-                    Next
-                </a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link">Next</a>
-            </li>
-        }
-    </ul>
-</nav>

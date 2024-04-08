@@ -41,7 +41,7 @@ namespace ReservationApp.Controllers
         /// POST action for user registration.
         /// </summary>
         /// <param name="model">The registration view model.</param>
-        /// <returns>If successful, redirects to the home page; otherwise, returns the registration view with errors.</returns>
+        /// <returns>If successful, redirects to the admin page; otherwise, returns the registration view with errors.</returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -57,7 +57,7 @@ namespace ReservationApp.Controllers
                 {
                     await userManager.AddToRoleAsync(user, "user");
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("create", "home");
                 }
 
                 foreach (var error in result.Errors)
@@ -71,7 +71,7 @@ namespace ReservationApp.Controllers
         /// <summary>
         /// POST action for user logout.
         /// </summary>
-        /// <returns>Redirects to the home page after logging out.</returns>
+        /// <returns>Redirects to the admin page after logging out.</returns>
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -93,7 +93,7 @@ namespace ReservationApp.Controllers
         /// POST action for user login.
         /// </summary>
         /// <param name="model">The login view model.</param>
-        /// <returns>If successful, redirects to the home page; otherwise, returns the login view with errors.</returns>
+        /// <returns>If successful, redirects to the admin page; otherwise, returns the login view with errors.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -108,7 +108,7 @@ namespace ReservationApp.Controllers
                     IdentityUser user = await userManager.FindByNameAsync(model.Email);
                     var claims = await userManager.GetClaimsAsync(user);
 
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("create", "home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Logowanie nie powiodło się!");
@@ -169,7 +169,7 @@ namespace ReservationApp.Controllers
                 var result = await userManager.ResetPasswordAsync(user, token, newPassword);
 
                 if (result.Succeeded)
-                    return RedirectToAction("ListUsers", "home");
+                    return RedirectToAction("ListUsers", "admin");
             }
 
             return View(model);
@@ -201,7 +201,7 @@ namespace ReservationApp.Controllers
 
             await userManager.DeleteAsync(user);
 
-            return RedirectToAction("ListUsers", "home");
+            return RedirectToAction("ListUsers", "admin");
         }
     }
 }

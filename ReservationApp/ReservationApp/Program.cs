@@ -37,6 +37,8 @@ namespace ReservationApp
             // Register the romm service
             builder.Services.AddScoped<IRoomService, RoomService>();
 
+            builder.Services.AddScoped<ReservationValidationService>();
+
             // Add controllers and views to the container
             builder.Services.AddControllersWithViews();
 
@@ -62,7 +64,7 @@ namespace ReservationApp
             // Map the default controller route
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=home}/{action=Index}/{id?}");
 
             app.Run();
         }

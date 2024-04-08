@@ -57,20 +57,16 @@ namespace ReservationApp.Models
         /// <summary>
         /// Gets or sets the price for the reservation.
         /// </summary>
-        //      [Display(Name = "Price")]
-        //      [Required(ErrorMessage = "You must enter a price.")]
-        //      [Column(TypeName = "decimal(8, 2)")]
-        //[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
-        [ValidateNever]        
-		public decimal Price { get; set; }
+        [ValidateNever]
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or sets the number of nights for the reservation.
         /// </summary>
         [Display(Name = "Number of Nights")]
         [Required(ErrorMessage = "You must enter the number of nights.")]
-		[Range(1, int.MaxValue, ErrorMessage = "Number of nights must be set to a positive value")]
-		public int NumberOfNights { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Number of nights must be set to a positive value")]
+        public int NumberOfNights { get; set; }
 
         /// <summary>
         /// Gets or sets the user who received the reservation.
