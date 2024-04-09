@@ -206,15 +206,5 @@ namespace ReservationApp.Controllers
             var users = _userManager.Users;
             return View(users);
         }
-
-        /// <summary>
-        /// GET action for displaying the access denied page.
-        /// </summary>
-        /// <returns>The access denied view.</returns>
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-
     }
 }

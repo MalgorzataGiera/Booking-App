@@ -113,8 +113,6 @@ namespace ReservationApp.Controllers
 
                 ModelState.AddModelError(string.Empty, "Logowanie nie powiodło się!");
 
-
-
             }
             return View(model);
         }
@@ -197,11 +195,12 @@ namespace ReservationApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserConfirmed(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = await userManager.FindByIdAsync(id);          
+            if(!await userManager.IsInRoleAsync(user, "Admin"))
+                await userManager.DeleteAsync(user);
 
-            await userManager.DeleteAsync(user);
-
-            return RedirectToAction("ListUsers", "admin");
+            return RedirectToAction("ListUsers", "admin");                       
+            
         }
     }
 }
