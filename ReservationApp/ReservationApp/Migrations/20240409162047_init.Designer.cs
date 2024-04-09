@@ -12,8 +12,8 @@ using ReservationApp.Models;
 namespace ReservationApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240120223018_kluczobcy")]
-    partial class kluczobcy
+    [Migration("20240409162047_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,14 +55,14 @@ namespace ReservationApp.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "0350047e-33f7-4e7c-9d46-6c859bb5732f",
+                            ConcurrencyStamp = "12b2e5f7-9878-40fa-ac60-3553f6cf4397",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "889c2db3-81ce-4801-9b8c-9e43799153f9",
+                            ConcurrencyStamp = "c757dea4-f8f3-4e98-95b2-fe89cf167563",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -160,33 +160,33 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            Id = "a51f8d01-c902-409c-a155-c37330aaea25",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86bf2243-fdc2-4c95-bb94-a88fd4c3a2ea",
+                            ConcurrencyStamp = "88a7c1c8-e2b4-4f42-8567-49d18831ab74",
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMdhr7o1GGUPZOYVfVF9cM9DgwhLNxAMvWr0RLR0RNLQZaafH1Xg2wSiHCa+BsdU2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEODyBKvX2bbAFylnF2jtpNy7wN8mM5D6UdRPnjaPlLDuRzWSTRDyEC5Ley0shfktHA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f8bbde2-4e6c-424a-9c0c-661d3ac85c27",
+                            SecurityStamp = "cb5d077c-7e0c-4cfb-afce-92f92e253ed3",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
                         new
                         {
-                            Id = "072192f4-1346-405d-8458-eacd240c8107",
+                            Id = "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "12905988-9627-479d-a9a6-423cf23e5434",
+                            ConcurrencyStamp = "3a408036-3ed6-400e-a63b-f9ee73bd77e9",
                             Email = "admin1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN1@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIqr1DIJtdy9E+Scuzt3NoBmfftMKgi9Cbj3pDMC+oQ+uTtFMduy9yRUdFM1sOtRPg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELnPAz8K9Pfv8BL9g9bUo+SS0phTzwngOziEEr9qCvOtFbUl35oz839XlOEdPVvH+g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d06e12f4-2a27-456b-860f-e72051be1f03",
+                            SecurityStamp = "56c1a135-7236-4392-a307-5e22aa680004",
                             TwoFactorEnabled = false,
                             UserName = "admin1@example.com"
                         });
@@ -256,12 +256,12 @@ namespace ReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "072192f4-1346-405d-8458-eacd240c8107",
+                            UserId = "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "209d0787-0d6e-4f04-84b8-a1d969670681",
+                            UserId = "a51f8d01-c902-409c-a155-c37330aaea25",
                             RoleId = "2"
                         });
                 });
@@ -307,12 +307,15 @@ namespace ReservationApp.Migrations
                     b.Property<int>("NumberOfNights")
                         .HasColumnType("int");
 
+                    b.Property<int>("NumberOfPeople")
+                        .HasColumnType("int");
+
                     b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(8, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ReceivedById")
                         .IsRequired()
@@ -335,11 +338,12 @@ namespace ReservationApp.Migrations
                             Id = 1,
                             Address = "Sample Address",
                             City = "Sample City",
-                            Date = new DateTime(2024, 1, 20, 23, 30, 18, 700, DateTimeKind.Local).AddTicks(7790),
+                            Date = new DateTime(2024, 4, 9, 18, 20, 47, 775, DateTimeKind.Local).AddTicks(9612),
                             NumberOfNights = 3,
+                            NumberOfPeople = 1,
                             Owner = "Sample Owner",
                             Price = 100.00m,
-                            ReceivedById = "072192f4-1346-405d-8458-eacd240c8107",
+                            ReceivedById = "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2",
                             RoomId = 1
                         });
                 });
@@ -351,6 +355,9 @@ namespace ReservationApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaxPeopleNumber")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8, 2)");
@@ -366,6 +373,7 @@ namespace ReservationApp.Migrations
                         new
                         {
                             Id = 1,
+                            MaxPeopleNumber = 1,
                             Price = 100.00m,
                             RoomNumber = 1
                         });

@@ -48,6 +48,13 @@ namespace ReservationApp.Models
         public Room Room { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of people for the reservation.
+        /// </summary>
+        [Required(ErrorMessage = "You must enter the number of people.")]
+        [Range(1,10, ErrorMessage = "Number of people for one reservation must be beetwen 1 and 10")]
+        public int NumberOfPeople { get; set; }
+
+        /// <summary>
         /// Gets or sets the owner of the reservation.
         /// </summary>
         [Display(Name = "Owner")]

@@ -42,6 +42,16 @@ namespace ReservationApp.Models
         }
 
         /// <summary>
+        /// Finds a room that can accommodate a given number of people.
+        /// </summary>
+        /// <param name="numberOfPeople">The number of people.</param>
+        /// <returns>The room with the specified number of available slots (or greater), or null if not found.</returns>
+        public Room? FindRoomByAvailableSlots(int numberOfPeople)
+        {
+            return _context.Room.FirstOrDefault(r => r.MaxPeopleNumber >= numberOfPeople);
+        }
+
+        /// <summary>
         /// Finds a page of reservations.
         /// </summary>
         /// <param name="page">The page number.</param>

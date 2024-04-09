@@ -31,6 +31,13 @@ namespace ReservationApp.Models
 		[Column(TypeName = "decimal(8, 2)")]
 		public decimal Price { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum number of people that can be accommodated in the room.
+        /// </summary>
+        [Required(ErrorMessage = "You must provide the maximum number of people for accommodation")]
+		[Range(1,10, ErrorMessage = "Maximum number of people for accommodation in this room must be a value beetwen 1 and 10")]
+        public int MaxPeopleNumber { get; set; }
+
 		/// <summary>
 		/// Gets or sets the reservations associated with the room.
 		/// </summary>

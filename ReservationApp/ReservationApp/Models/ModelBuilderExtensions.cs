@@ -61,6 +61,7 @@ namespace ReservationApp.Models
                 {
                     Id = 1,
                     RoomNumber = 1,
+                    MaxPeopleNumber = 1,
                     Price = 100.00m
                 });
 
@@ -76,6 +77,7 @@ namespace ReservationApp.Models
                     Owner = "Sample Owner",
                     Price = 100.00m,
                     NumberOfNights = 3,
+                    NumberOfPeople = 1,
                     ReceivedById = adminId
                 }
             );

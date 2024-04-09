@@ -16,6 +16,7 @@
             <tr>
                 <th>Room</th>
                 <th>Price</th>
+                <th>Max people</th>
                 <th></th>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <tr>
                     <td>@room.RoomNumber</td>
                     <td>@room.Price</td>
+                    <td>@room.MaxPeopleNumber</td>
                     <td>
                         <a class="btn btn-outline-primary" asp-controller="Room" asp-action="UpdateRoom" asp-route-id=@room.Id>Edit</a>
                     </td>

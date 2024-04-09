@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ReservationApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Migration1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,21 @@ namespace ReservationApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Room",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
+                    MaxPeopleNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Room", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,9 +182,10 @@ namespace ReservationApp.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Room = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    NumberOfPeople = table.Column<int>(type: "int", nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NumberOfNights = table.Column<int>(type: "int", nullable: false),
                     ReceivedById = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -182,6 +198,12 @@ namespace ReservationApp.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reservations_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -189,8 +211,8 @@ namespace ReservationApp.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "ff6b62a8-1f05-46db-8915-1dabf586e68a", "Admin", "ADMIN" },
-                    { "2", "2b5aef8b-a0a9-4060-9b1a-b1ac4ae30fc3", "User", "USER" }
+                    { "1", "12b2e5f7-9878-40fa-ac60-3553f6cf4397", "Admin", "ADMIN" },
+                    { "2", "c757dea4-f8f3-4e98-95b2-fe89cf167563", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -198,23 +220,28 @@ namespace ReservationApp.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "083b28d7-c94b-4f6c-8193-8ef4144bb77d", 0, "385bba49-3158-402f-9d7a-1b08a48ab160", "admin1@example.com", true, false, null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAEAACcQAAAAEPYiH9EjhhP3/rzqkY8J+mfIeJigPu2zAolw0ORNrhbSK6C4MnRAUAnJP4sipqJY2g==", null, false, "bf59c719-ed4a-4249-a7ce-a9c26e808501", false, "admin1@example.com" },
-                    { "cd967b25-3793-47a9-b7a6-c8262ca13c69", 0, "4904e4c0-ace4-4187-b46a-48e66390345c", "user1@example.com", true, false, null, "USER@EXAMPLE.COM", "USER1@EXAMPLE.COM", "AQAAAAEAACcQAAAAEMQULgjRfEVTVuQV8gwBl2PO8hal1DZhFzw6nhKnS6ib1lyA1RJL3qhMl4+BVX9aRw==", null, false, "920ecd23-b510-4cc4-9acb-f60ca060475c", false, "user1@example.com" }
+                    { "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2", 0, "3a408036-3ed6-400e-a63b-f9ee73bd77e9", "admin1@example.com", true, false, null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAEAACcQAAAAELnPAz8K9Pfv8BL9g9bUo+SS0phTzwngOziEEr9qCvOtFbUl35oz839XlOEdPVvH+g==", null, false, "56c1a135-7236-4392-a307-5e22aa680004", false, "admin1@example.com" },
+                    { "a51f8d01-c902-409c-a155-c37330aaea25", 0, "88a7c1c8-e2b4-4f42-8567-49d18831ab74", "user1@example.com", true, false, null, "USER@EXAMPLE.COM", "USER1@EXAMPLE.COM", "AQAAAAEAACcQAAAAEODyBKvX2bbAFylnF2jtpNy7wN8mM5D6UdRPnjaPlLDuRzWSTRDyEC5Ley0shfktHA==", null, false, "cb5d077c-7e0c-4cfb-afce-92f92e253ed3", false, "user1@example.com" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Room",
+                columns: new[] { "Id", "MaxPeopleNumber", "Price", "RoomNumber" },
+                values: new object[] { 1, 1, 100.00m, 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "1", "083b28d7-c94b-4f6c-8193-8ef4144bb77d" },
-                    { "2", "cd967b25-3793-47a9-b7a6-c8262ca13c69" }
+                    { "1", "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2" },
+                    { "2", "a51f8d01-c902-409c-a155-c37330aaea25" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Reservations",
-                columns: new[] { "Id", "Address", "City", "Date", "NumberOfNights", "Owner", "Price", "ReceivedById", "Room" },
-                values: new object[] { 1, "Sample Address", "Sample City", new DateTime(2024, 1, 16, 18, 36, 51, 599, DateTimeKind.Local).AddTicks(887), 3, "Sample Owner", 100.00m, "083b28d7-c94b-4f6c-8193-8ef4144bb77d", 101 });
+                columns: new[] { "Id", "Address", "City", "Date", "NumberOfNights", "NumberOfPeople", "Owner", "Price", "ReceivedById", "RoomId" },
+                values: new object[] { 1, "Sample Address", "Sample City", new DateTime(2024, 4, 9, 18, 20, 47, 775, DateTimeKind.Local).AddTicks(9612), 3, 1, "Sample Owner", 100.00m, "98b37cc4-bdc6-4f1f-bd38-e1ba62b625a2", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -259,6 +286,11 @@ namespace ReservationApp.Migrations
                 name: "IX_Reservations_ReceivedById",
                 table: "Reservations",
                 column: "ReceivedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_RoomId",
+                table: "Reservations",
+                column: "RoomId");
         }
 
         /// <inheritdoc />
@@ -287,6 +319,9 @@ namespace ReservationApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Room");
         }
     }
 }
