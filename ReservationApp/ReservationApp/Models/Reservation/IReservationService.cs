@@ -40,5 +40,7 @@
         Reservation? FindById(int id);
 
         PagingList<Reservation> FindPage(int page, int size);
+
+        List<Reservation> FindReservationsByUserId(string userId);
     }
 }

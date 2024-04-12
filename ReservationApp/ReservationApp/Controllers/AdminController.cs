@@ -155,7 +155,6 @@ namespace ReservationApp.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            // you cannot delete admin user
             var reservationId = await _context.Reservations.FindAsync(id);
 
             await _reservations.DeleteAsync(reservationId);

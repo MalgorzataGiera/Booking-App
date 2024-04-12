@@ -1,0 +1,42 @@
+﻿@model Reservation
+@{
+    ViewData["Title"] = "Delete reservation";
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>For</th>
+                <th>Nights</th>
+                <th>Price per night</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Date.ToShortDateString()</td>
+                <td>
+                    @Model.NumberOfPeople @(Model.NumberOfPeople == 1 ? "person" : "people")
+                </td>
+                <td>@Model.NumberOfNights</td>
+                <td>@Model.Price</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="col-md-4 offset-md-4 mt-5">
+    <div class="card" style="border-color: red">
+        <div class="card-body">
+            <form asp-action="CancelConfirmed" method="post" class="delete-form">
+                <input asp-for="Id" />
+                <p>Are you sure you want to cancel your reservation?</p>
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <a asp-controller="Home" asp-action="UserReservations" class="btn btn-secondary">No</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+

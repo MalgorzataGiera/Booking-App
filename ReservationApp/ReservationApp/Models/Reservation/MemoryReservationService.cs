@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ReservationApp.Models
 {
@@ -93,6 +94,11 @@ namespace ReservationApp.Models
                     _context.Reservations.Count(),
                     page,
                     size);
+        }
+
+        public List<Reservation> FindReservationsByUserId(string userId)
+        {            
+            return _context.Reservations.Where(r => r.ReceivedById == userId).ToList();
         }
 
     }

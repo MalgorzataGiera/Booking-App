@@ -71,12 +71,77 @@ namespace ReservationApp.Controllers
                     return View(model);
                 }
 
-                model = await _reservations.CreateAsync(model);                
+                model = await _reservations.CreateAsync(model);
 
-                // should redirect to page with all user's resrvations
-                return RedirectToAction("Index");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                return RedirectToAction("UserReservations");
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult UserReservations()
+        {
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var result = _reservations.FindReservationsByUserId(userIdClaim);
+            return View(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Reservation model, int id)
+        {
+            return View(_reservations.FindById(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Reservation model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+                model.ReceivedById = userIdClaim.Value;
+
+                var selectedRoom = _rooms.FindRoomByAvailableSlots(model.NumberOfPeople);
+                if (selectedRoom is null)
+                {
+                    ModelState.AddModelError("reservation.NumberOfPeople", "No rooms to accommodate this number of people. Please split your reservation.");
+                    return View(model);
+                }
+                model.Room = selectedRoom;
+                model.Price = selectedRoom.Price;
+
+                if (!await _reservationValidationService.IsReservationDateValid(model))
+                {
+                    ModelState.AddModelError("reservation.Date", "No rooms are available for the selected period.");
+                    return View(model);
+                }
+
+                model = await _reservations.UpdateAsync(model);
+
+                return RedirectToAction("UserReservations");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Cancel(int id)
+        {
+            return View(_reservations.FindById(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>CancelConfirmed(int id)
+        {
+            var reservationId = _reservations.FindById(id);
+
+            await _reservations.DeleteAsync(reservationId);
+
+            return RedirectToAction("UserReservations");
+        }
+
     }
 }

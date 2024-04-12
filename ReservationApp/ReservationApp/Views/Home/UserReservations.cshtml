@@ -1,0 +1,37 @@
+﻿@model List<Reservation>
+@{
+    ViewData["Title"] = "Your reservations";
+}
+
+<h1>Your reservations</h1>
+<div>
+    <table class="table">
+        <thead class="table-items">
+            <tr>
+                <th>Date</th>
+                <th>For</th>
+                <th>Nights</th>
+                <th>Price per night</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr>
+                    <td>@reservation.Date.ToShortDateString()</td>
+                    <td>
+                        @reservation.NumberOfPeople @(reservation.NumberOfPeople == 1 ? "person" : "people")
+                    </td>
+                    <td>@reservation.NumberOfNights</td>
+                    <td>@reservation.Price</td>
+                    <td>
+                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Update" asp-route-id=@reservation.Id>Edit</a>
+                        <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Cancel" asp-route-id=@reservation.Id>Cancel</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

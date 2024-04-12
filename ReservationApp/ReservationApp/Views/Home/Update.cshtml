@@ -1,0 +1,47 @@
+﻿@model Reservation
+@{
+}
+<h1>Update a reservation</h1>
+<form asp-controller="Home" asp-action="Update" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Date"></label>
+        <input class="form-control" asp-for="Date" />
+        <span class="text-danger" asp-validation-for="Date"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Owner"></label>
+        <input class="form-control" asp-for="Owner" />
+        <span class="text-danger" asp-validation-for="Owner"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City"></label>
+        <input class="form-control" asp-for="City" />
+        <span class="text-danger" asp-validation-for="City"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address"></label>
+        <input class="form-control" asp-for="Address" />
+        <span class="text-danger" asp-validation-for="Address"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NumberOfPeople">Number of people</label>
+        <input class="form-control" asp-for="NumberOfPeople" type="number" />
+        <span class="text-danger" asp-validation-for="NumberOfPeople"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NumberOfNights">Number of Nights</label>
+        <input class="form-control" asp-for="NumberOfNights" type="number" />
+        <span class="text-danger" asp-validation-for="NumberOfNights"></span>
+    </div>
+
+    <div class="my-btn">
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+
+</form>
