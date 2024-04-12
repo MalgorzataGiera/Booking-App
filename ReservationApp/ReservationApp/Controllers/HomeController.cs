@@ -82,6 +82,10 @@ namespace ReservationApp.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Displays user's reservations.
+        /// </summary>
+        /// <returns>The view with user's reservations.</returns>
         [HttpGet]
         public IActionResult UserReservations()
         {
@@ -90,12 +94,22 @@ namespace ReservationApp.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// Displays the form to update a reservation.
+        /// </summary>
+        /// <param name="id">The id of the reservation to be updated.</param>
+        /// <returns>The view with the form to update the reservation.</returns>
         [HttpGet]
-        public async Task<IActionResult> Update(Reservation model, int id)
+        public async Task<IActionResult> Update(int id)
         {
             return View(_reservations.FindById(id));
         }
 
+        /// <summary>
+        /// Updates the reservation.
+        /// </summary>
+        /// <param name="model">The reservation to be updated.</param>
+        /// <returns>Redirects to user's reservations view after updating the reservation.</returns>
         [HttpPost]
         public async Task<IActionResult> Update(Reservation model)
         {
@@ -127,12 +141,23 @@ namespace ReservationApp.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Displays the form to cancel a reservation.
+        /// </summary>
+        /// <param name="id">The id of the reservation to be canceled.</param>
+        /// <returns>The view with the form to cancel the reservation.</returns>
         [HttpGet]
         public IActionResult Cancel(int id)
         {
             return View(_reservations.FindById(id));
         }
 
+        /// <summary>
+        /// Cancels the reservation.
+        /// </summary>
+        /// <param name="id">The id of the reservation to be canceled.</param>
+        /// <returns>Redirects to user's reservations view after canceling the reservation.</returns>
+        [HttpPost]
         [HttpPost]
         public async Task<IActionResult>CancelConfirmed(int id)
         {

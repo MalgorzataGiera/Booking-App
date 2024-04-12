@@ -39,8 +39,19 @@
         /// <returns>The found reservation, or null if not found.</returns>
         Reservation? FindById(int id);
 
+        /// <summary>
+        /// Retrieves a paged list of reservations.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="size">The number of items per page.</param>
+        /// <returns>A paged list of reservations.</returns>
         PagingList<Reservation> FindPage(int page, int size);
 
+        /// <summary>
+        /// Retrieves reservations for a specified user.
+        /// </summary>
+        /// <param name="userId">The user's identifier.</param>
+        /// <returns>A list of reservations for the specified user.</returns>
         List<Reservation> FindReservationsByUserId(string userId);
     }
 }

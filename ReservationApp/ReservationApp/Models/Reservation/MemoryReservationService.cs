@@ -96,6 +96,11 @@ namespace ReservationApp.Models
                     size);
         }
 
+        /// <summary>
+        /// Retrieves reservations for a specified user.
+        /// </summary>
+        /// <param name="userId">The user's identifier.</param>
+        /// <returns>A list of reservations for the specified user.</returns>
         public List<Reservation> FindReservationsByUserId(string userId)
         {            
             return _context.Reservations.Where(r => r.ReceivedById == userId).ToList();
