@@ -21,6 +21,7 @@ namespace ReservationApp.Models
 		/// </summary>
 		[Display(Name = "RoomNumber")]
 		[Required(ErrorMessage = "You must provide the room number")]
+		[Range(1, int.MaxValue)]
 		public int RoomNumber { get; set; }
 
 		/// <summary>
@@ -29,6 +30,7 @@ namespace ReservationApp.Models
 		[Display(Name = "Price")]
 		[Required(ErrorMessage = "You must provide the room price")]
 		[Column(TypeName = "decimal(8, 2)")]
+		[Range(0.01, (double)decimal.MaxValue)]
 		public decimal Price { get; set; }
 
         /// <summary>
