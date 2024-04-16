@@ -104,14 +104,13 @@ namespace ReservationApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    // dodaje claim
                     IdentityUser user = await userManager.FindByNameAsync(model.Email);
                     var claims = await userManager.GetClaimsAsync(user);
 
                     return RedirectToAction("create", "home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Logowanie nie powiodło się!");
+                ModelState.AddModelError(string.Empty, "Login failed.");
 
             }
             return View(model);

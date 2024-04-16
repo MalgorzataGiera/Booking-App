@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ namespace ReservationApp.Controllers
         /// GET action for displaying the create reservation view.
         /// </summary>
         /// <returns>The create reservation view with a list of available rooms in the ViewBag.</returns>
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -47,6 +49,7 @@ namespace ReservationApp.Controllers
         /// </summary>
         /// <param name="model">The reservation model containing reservation data.</param>
         /// <returns>Returns a redirection to the Index action if the reservation is successfully created, otherwise returns the view with validation errors.</returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Reservation model)
         {
