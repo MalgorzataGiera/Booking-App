@@ -16,12 +16,14 @@ namespace ReservationApp.Controllers
         private readonly IReservationService _reservations;
         private readonly IRoomService _rooms;
         private readonly ReservationValidationService _reservationValidationService;
+        private readonly AppDbContext _context;
 
-        public HomeController(IReservationService reservations, ReservationValidationService reservationValidationService, IRoomService rooms)
+        public HomeController(IReservationService reservations, ReservationValidationService reservationValidationService, IRoomService rooms, AppDbContext context)
         {
             _reservations = reservations;
             _reservationValidationService = reservationValidationService;
             _rooms = rooms;
+            _context = context;
         }
 
         /// <summary>
@@ -114,13 +116,24 @@ namespace ReservationApp.Controllers
         /// <param name="model">The reservation to be updated.</param>
         /// <returns>Redirects to user's reservations view after updating the reservation.</returns>
         [HttpPost]
-        public async Task<IActionResult> Update(Reservation model)
+        public async Task<IActionResult> Update(Reservation model, int id)
         {
             if (ModelState.IsValid)
             {
-                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                var updatedReservation = _reservations.FindById(id);
 
-                model.ReceivedById = userIdClaim.Value;
+                if (updatedReservation == null)
+                {
+                    return NotFound();
+                }
+                _context.Entry(updatedReservation).State = EntityState.Detached;
+
+                updatedReservation.Date = model.Date;
+                updatedReservation.City = model.City;
+                updatedReservation.Address = model.Address;
+                updatedReservation.NumberOfPeople = model.NumberOfPeople;
+                updatedReservation.Owner = model.Owner;
+                updatedReservation.NumberOfNights = model.NumberOfNights;
 
                 var selectedRoom = _rooms.FindRoomByAvailableSlots(model.NumberOfPeople);
                 if (selectedRoom is null)
@@ -137,8 +150,12 @@ namespace ReservationApp.Controllers
                     return View(model);
                 }
 
-                model = await _reservations.UpdateAsync(model);
+                model = await _reservations.UpdateAsync(updatedReservation);
 
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
                 return RedirectToAction("UserReservations");
             }
             return View(model);

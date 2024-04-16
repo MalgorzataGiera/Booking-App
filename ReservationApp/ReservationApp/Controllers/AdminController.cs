@@ -79,59 +79,6 @@ namespace ReservationApp.Controllers
         }
 
         /// <summary>
-        /// GET action for updating a reservation.
-        /// </summary>
-        /// <param name="id">The ID of the reservation.</param>
-        /// <returns>The update view of the reservation.</returns>
-        [HttpGet]
-        public IActionResult Update(CompositeModel model, int id)
-        {
-            var rooms = _context.Room.ToList();
-            model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
-            model.reservation = _reservations.FindById(id);
-
-            model.reservation.Id = id;
-
-            return View(model);
-        }
-
-        /// <summary>
-        /// POST action for updating a reservation.
-        /// </summary>
-        /// <remarks>
-        /// This action updates a reservation in the system. 
-        /// If the ModelState is valid, it sets the current user as the ReceivedBy for the reservation, 
-        /// updates the reservation, and redirects to the Index action.
-        /// If the ModelState is not valid, it returns the Update view with the model containing validation errors.
-        /// </remarks>
-        /// <param name="model">The reservation model to be updated.</param>
-        /// <returns>If successful, redirects to the Index action; otherwise, returns the Update view with errors.</returns>
-        [HttpPost]
-        public async Task<IActionResult> Update(CompositeModel model)
-        {
-            // Retrieve the list of rooms to populate the dropdown
-            var rooms = _context.Room.ToList();
-            model.roomsSelectList = new SelectList(rooms, "Id", "RoomNumber");
-
-            if (ModelState.IsValid)
-            {
-                //Set the current user as the ReceivedBy for the reservation
-                var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-                model.reservation.ReceivedById = userIdClaim.Value;
-
-                model.reservation.Room = await _context.Room.FindAsync(model.reservation.RoomId);
-
-                model.reservation = await _reservations.UpdateAsync(model.reservation);
-
-                return RedirectToAction("Index");
-            }
-
-            return View(model);
-        }
-
-
-
-        /// <summary>
         /// GET action for displaying the delete confirmation view.
         /// </summary>
         /// <param name="id">The ID of the reservation to be deleted.</param>
@@ -162,7 +109,6 @@ namespace ReservationApp.Controllers
             return RedirectToAction("Index");
         }
 
-        
 
         /// <summary>
         /// GET action for displaying the statistics page.
